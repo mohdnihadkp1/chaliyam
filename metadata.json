@@ -1,0 +1,5 @@
+{
+  "name": "Chaliyam Connect",
+  "description": "A community web application for Chaliyam village featuring local information, bus timings, emergency contacts, and an intelligent local AI assistant.",
+  "requestFramePermissions": []
+}
