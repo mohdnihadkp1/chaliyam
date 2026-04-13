@@ -11,12 +11,19 @@ export default function BusinessSection() {
   const [uploadedImages, setUploadedImages] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setSearchQuery(searchInput);
     }, 300);
     return () => clearTimeout(timer);
   }, [searchInput]);
+
+  // Reset image index when opening a new item
+  useEffect(() => {
+    setCurrentImageIndex(0);
+  }, [selectedItem]);
 
   const toggleCategory = (categoryId: string) => {
     if (categoryId === 'all') {
@@ -208,10 +215,40 @@ export default function BusinessSection() {
             </div>
             <div className="p-5 overflow-y-auto">
               {selectedItem.images && selectedItem.images.length > 0 && (
-                <div className="flex gap-2 overflow-x-auto pb-4 mb-2 snap-x">
-                  {selectedItem.images.map((img, idx) => (
-                    <img key={idx} src={img} alt={`${selectedItem.title} - ${idx + 1}`} className="h-48 w-auto object-cover rounded-xl shrink-0 snap-center border border-white/10" />
-                  ))}
+                <div className="relative mb-4 rounded-xl overflow-hidden border border-white/10 group">
+                  <div className="aspect-video w-full bg-slate-950">
+                    <img 
+                      src={selectedItem.images[currentImageIndex]} 
+                      alt={`${selectedItem.title} - Image ${currentImageIndex + 1}`} 
+                      className="w-full h-full object-contain" 
+                    />
+                  </div>
+                  
+                  {selectedItem.images.length > 1 && (
+                    <>
+                      <button 
+                        onClick={() => setCurrentImageIndex(prev => prev === 0 ? selectedItem.images!.length - 1 : prev - 1)}
+                        className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/50 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/80"
+                      >
+                        &larr;
+                      </button>
+                      <button 
+                        onClick={() => setCurrentImageIndex(prev => prev === selectedItem.images!.length - 1 ? 0 : prev + 1)}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/50 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/80"
+                      >
+                        &rarr;
+                      </button>
+                      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5">
+                        {selectedItem.images.map((_, idx) => (
+                          <button 
+                            key={idx}
+                            onClick={() => setCurrentImageIndex(idx)}
+                            className={`w-2 h-2 rounded-full transition-colors ${idx === currentImageIndex ? 'bg-gold-light' : 'bg-white/50 hover:bg-white/80'}`}
+                          />
+                        ))}
+                      </div>
+                    </>
+                  )}
                 </div>
               )}
               
