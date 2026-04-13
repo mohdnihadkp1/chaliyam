@@ -191,13 +191,32 @@ export default function PeopleSection() {
                   </a>
                 )}
                 
-                <button 
-                  onClick={() => handleWhatsApp(person.phone, person.name)}
-                  className="w-full flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#128C7E] text-white py-2 rounded-lg transition-colors font-medium text-sm shadow-sm mt-1"
-                >
-                  <MessageCircle size={16} />
-                  WhatsApp
-                </button>
+                <div className="flex gap-2 mt-1">
+                  <button 
+                    onClick={() => handleWhatsApp(person.phone, person.name)}
+                    className="flex-1 flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#128C7E] text-white py-2 rounded-lg transition-colors font-medium text-sm shadow-sm"
+                  >
+                    <MessageCircle size={16} />
+                    WhatsApp
+                  </button>
+                  <button 
+                    onClick={() => {
+                      setFormData({
+                        name: person.name,
+                        role: person.role,
+                        phone: person.phone,
+                        category: person.category,
+                        image: person.image || '',
+                        website: person.website || ''
+                      });
+                      setIsSubmitModalOpen(true);
+                    }}
+                    className="px-3 flex items-center justify-center bg-white/10 hover:bg-white/20 text-slate-200 py-2 rounded-lg transition-colors font-medium text-sm border border-white/10"
+                    title="Edit Profile"
+                  >
+                    Edit
+                  </button>
+                </div>
               </div>
             </div>
           </div>
