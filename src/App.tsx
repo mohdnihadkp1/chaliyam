@@ -21,7 +21,7 @@ export default function App() {
   }, [location.pathname]);
 
   return (
-    <div className="min-h-screen flex flex-col antialiased selection:bg-gold/30 selection:text-gold-dark transition-colors duration-300">
+    <div className="min-h-screen flex flex-col antialiased selection:bg-gold/30 selection:text-gold-light transition-colors duration-300 bg-slate-950 text-slate-200">
       <Header />
       
       <main className="flex-1 pb-24 md:pb-0">
