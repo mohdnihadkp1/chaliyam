@@ -144,35 +144,35 @@ export default function AIAssistant() {
       {/* Floating Button */}
       <button
         onClick={() => setIsOpen(true)}
-        className={`fixed bottom-20 md:bottom-6 right-6 w-14 h-14 bg-gradient-to-br from-gold to-gold-light rounded-full flex items-center justify-center text-white shadow-[0_4px_20px_rgba(201,148,26,0.4)] transition-transform hover:scale-110 z-50 ${isOpen ? 'hidden' : 'flex'}`}
+        className={`fixed bottom-20 md:bottom-6 right-6 w-14 h-14 bg-gold hover:bg-gold-light rounded-full flex items-center justify-center text-slate-900 shadow-[0_0_20px_rgba(201,148,26,0.3)] transition-transform hover:scale-110 z-50 ${isOpen ? 'hidden' : 'flex'}`}
       >
         <Sparkles size={24} />
       </button>
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-20 md:bottom-6 right-6 w-[calc(100vw-48px)] md:w-[380px] h-[550px] max-h-[calc(100vh-120px)] bg-white/95 dark:bg-[#1a2e20]/95 backdrop-blur-xl rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,0.2)] flex flex-col overflow-hidden z-50 border border-white/40 dark:border-green-deep/40">
+        <div className="fixed bottom-20 md:bottom-6 right-6 w-[calc(100vw-48px)] md:w-[380px] h-[550px] max-h-[calc(100vh-120px)] bg-slate-950/90 backdrop-blur-xl rounded-2xl shadow-[0_12px_40px_rgba(0,0,0,0.3)] flex flex-col overflow-hidden z-50 border border-white/10">
           {/* Header */}
-          <div className="bg-gradient-to-r from-green-deep to-green-mid p-4 flex items-center justify-between text-white shadow-sm z-10">
+          <div className="bg-slate-900/80 p-4 flex items-center justify-between border-b border-white/10 shadow-sm z-10 backdrop-blur-md">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 bg-white/20 rounded-full flex items-center justify-center text-lg shadow-inner">
-                <Palmtree size={20} />
+              <div className="w-9 h-9 bg-white/5 border border-white/10 rounded-full flex items-center justify-center text-lg shadow-inner">
+                <Palmtree size={20} className="text-gold-light" />
               </div>
               <div>
                 <h3 className="font-yatra text-[18px] leading-tight text-gold-light">Chaliyam AI</h3>
-                <p className="text-[11px] opacity-90 font-medium tracking-wide">Your local assistant</p>
+                <p className="text-[11px] text-slate-400 font-medium tracking-wide">Your local assistant</p>
               </div>
             </div>
             <button 
               onClick={() => setIsOpen(false)}
-              className="w-8 h-8 flex items-center justify-center rounded-full bg-white/10 text-white/90 hover:bg-white/20 hover:text-white transition-all border-none cursor-pointer"
+              className="w-8 h-8 flex items-center justify-center rounded-full bg-white/5 text-slate-400 hover:bg-white/10 hover:text-red-400 transition-all border border-white/10 cursor-pointer"
             >
               <X size={18} />
             </button>
           </div>
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-5 bg-cream/50 dark:bg-[#0a140e]/50 flex flex-col gap-5 scroll-smooth">
+          <div className="flex-1 overflow-y-auto p-5 bg-slate-950/50 flex flex-col gap-5 scroll-smooth">
             {messages.map((msg, idx) => (
               <div 
                 key={idx} 
@@ -181,18 +181,18 @@ export default function AIAssistant() {
                 <div 
                   className={`max-w-[85%] px-4 py-3 text-[14px] leading-relaxed shadow-sm relative group ${
                     msg.role === 'user' 
-                      ? 'bg-green-deep dark:bg-[#2d7a4f] text-white rounded-2xl rounded-br-sm' 
-                      : 'bg-white dark:bg-[#143321] text-text-dark dark:text-white border border-green-deep/5 dark:border-gold/10 rounded-2xl rounded-bl-sm'
+                      ? 'bg-gold/20 text-gold-light border border-gold/30 rounded-2xl rounded-br-sm backdrop-blur-sm' 
+                      : 'bg-white/5 text-slate-200 border border-white/10 rounded-2xl rounded-bl-sm backdrop-blur-sm'
                   }`}
                 >
                   {msg.role === 'model' ? (
                     <>
-                      <div className="markdown-body prose prose-sm max-w-none prose-p:my-1 prose-ul:my-1 prose-li:my-0 prose-strong:text-green-deep dark:prose-strong:text-gold-light dark:text-white">
+                      <div className="markdown-body prose prose-sm max-w-none prose-p:my-1 prose-ul:my-1 prose-li:my-0 prose-strong:text-gold-light text-slate-200">
                         <ReactMarkdown>{msg.text}</ReactMarkdown>
                       </div>
                       <button
                         onClick={() => handleCopy(msg.text, idx)}
-                        className="absolute -right-8 top-2 p-1.5 rounded-md bg-white dark:bg-[#1a2e20] text-text-light hover:text-green-deep dark:hover:text-gold shadow-sm border border-gray-100 dark:border-gold/10 opacity-0 group-hover:opacity-100 transition-opacity"
+                        className="absolute -right-8 top-2 p-1.5 rounded-md bg-slate-800 text-slate-400 hover:text-gold-light shadow-sm border border-white/10 opacity-0 group-hover:opacity-100 transition-opacity"
                         title="Copy response"
                       >
                         {copiedIndex === idx ? <Check size={14} className="text-green-500" /> : <Copy size={14} />}
@@ -205,13 +205,13 @@ export default function AIAssistant() {
               </div>
             ))}
             
-            {/* Typing Indicattor */}
+            {/* Typing Indicator */}
             {isLoading && (
               <div className="flex justify-start">
-                <div className="bg-white dark:bg-[#143321] border border-green-deep/5 dark:border-gold/10 rounded-2xl rounded-bl-sm px-4 py-4 shadow-sm flex items-center gap-1.5 w-fit">
-                  <div className="w-1.5 h-1.5 bg-green-mid/60 dark:bg-gold-light/60 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                  <div className="w-1.5 h-1.5 bg-green-mid/60 dark:bg-gold-light/60 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                  <div className="w-1.5 h-1.5 bg-green-mid/60 dark:bg-gold-light/60 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                <div className="bg-white/5 border border-white/10 rounded-2xl rounded-bl-sm px-4 py-4 shadow-sm flex items-center gap-1.5 w-fit backdrop-blur-sm">
+                  <div className="w-1.5 h-1.5 bg-gold-light/60 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                  <div className="w-1.5 h-1.5 bg-gold-light/60 rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                  <div className="w-1.5 h-1.5 bg-gold-light/60 rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
                 </div>
               </div>
             )}
@@ -219,10 +219,10 @@ export default function AIAssistant() {
           </div>
 
           {/* Input */}
-          <div className="p-3 bg-white/80 dark:bg-[#1a2e20]/80 backdrop-blur-md border-t border-green-deep/10 dark:border-gold/10">
+          <div className="p-3 bg-slate-900/80 backdrop-blur-md border-t border-white/10">
             <form 
               onSubmit={(e) => { e.preventDefault(); handleSend(); }}
-              className="flex items-center gap-2 bg-green-pale/50 dark:bg-[#0f2919]/50 border border-green-deep/15 dark:border-gold/20 rounded-2xl p-1.5 transition-colors focus-within:border-green-mid dark:focus-within:border-gold focus-within:bg-white dark:focus-within:bg-[#143321] shadow-inner"
+              className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-2xl p-1.5 transition-colors focus-within:border-gold/50 focus-within:bg-white/10 shadow-inner"
             >
               <input
                 ref={inputRef}
@@ -231,7 +231,7 @@ export default function AIAssistant() {
                 onChange={(e) => setInput(e.target.value)}
                 disabled={isLoading}
                 placeholder={isLoading ? "Typing..." : "Ask about buses, spots..."}
-                className="flex-1 bg-transparent px-3 py-2 text-[14px] outline-none text-text-dark dark:text-white min-h-[40px] disabled:opacity-50"
+                className="flex-1 bg-transparent px-3 py-2 text-[14px] outline-none text-slate-200 min-h-[40px] disabled:opacity-50 placeholder:text-slate-500"
               />
               
               <div className="flex items-center gap-1 pr-1">
@@ -242,8 +242,8 @@ export default function AIAssistant() {
                     disabled={isLoading}
                     className={`w-9 h-9 rounded-full flex items-center justify-center transition-all border-none cursor-pointer disabled:opacity-50 ${
                       isListening 
-                        ? 'bg-red-100 text-red-500 animate-pulse' 
-                        : 'bg-transparent text-green-deep/60 dark:text-gold/60 hover:bg-green-deep/10 dark:hover:bg-gold/10 hover:text-green-deep dark:hover:text-gold'
+                        ? 'bg-red-500/20 text-red-400 animate-pulse' 
+                        : 'bg-transparent text-slate-400 hover:bg-white/10 hover:text-gold-light'
                     }`}
                     title="Voice Input"
                   >
@@ -254,7 +254,7 @@ export default function AIAssistant() {
                 <button
                   type="submit"
                   disabled={!input.trim() || isLoading}
-                  className="w-9 h-9 bg-green-deep dark:bg-gold text-white dark:text-[#1a2e20] rounded-full flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed hover:bg-green-mid dark:hover:bg-gold-light transition-all shrink-0 shadow-sm border-none cursor-pointer"
+                  className="w-9 h-9 bg-gold text-slate-900 rounded-full flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gold-light transition-all shrink-0 shadow-sm border-none cursor-pointer"
                 >
                   <Send size={16} className="ml-0.5" />
                 </button>
