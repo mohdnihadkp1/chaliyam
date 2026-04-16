@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Yatra+One&family=Tiro+Malayalam+New:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-green-deep: var(--color-green-deep-val);
+  --color-green-mid: var(--color-green-mid-val);
+  --color-green-light: var(--color-green-light-val);
+  --color-green-pale: var(--color-green-pale-val);
+  --color-gold: var(--color-gold-val);
+  --color-gold-light: var(--color-gold-light-val);
+  --color-gold-pale: var(--color-gold-pale-val);
+  --color-gold-dark: var(--color-gold-dark-val);
+  --color-cream: var(--color-cream-val);
+  --color-text-dark: var(--color-text-dark-val);
+  --color-text-mid: var(--color-text-mid-val);
+  --color-text-light: var(--color-text-light-val);
+  --font-sans: 'DM Sans', sans-serif;
+  --font-yatra: 'Yatra One', cursive;
+  --font-malayalam: 'Tiro Malayalam New', serif;
+}
+
+:root {
+  --color-green-deep-val: #1a4a2e;
+  --color-green-mid-val: #2d7a4f;
+  --color-green-light-val: #4caf78;
+  --color-green-pale-val: #e8f5ee;
+  --color-gold-val: #c9941a;
+  --color-gold-light-val: #f0b429;
+  --color-gold-pale-val: #fdf3dc;
+  --color-gold-dark-val: #8b6310;
+  --color-cream-val: #faf7f0;
+  --color-text-dark-val: #1a2e20;
+  --color-text-mid-val: #3d5a47;
+  --color-text-light-val: #6b8c73;
+}
+
+.dark {
+  --color-green-deep-val: #0f2919;
+  --color-green-mid-val: #1a4a2e;
+  --color-green-light-val: #2d7a4f;
+  --color-green-pale-val: #143321;
+  --color-gold-val: #f0b429;
+  --color-gold-light-val: #fce588;
+  --color-gold-pale-val: #4a360a;
+  --color-gold-dark-val: #c9941a;
+  --color-cream-val: #0a140e;
+  --color-text-dark-val: #e8f5ee;
+  --color-text-mid-val: #a3c2b0;
+  --color-text-light-val: #6b8c73;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-text-dark);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #020617; } /* slate-950 */
+::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; } /* slate-700 */
+::-webkit-scrollbar-thumb:hover { background: #475569; } /* slate-600 */
+
+/* Custom horizontal scrollbar for specific elements */
+.custom-scrollbar::-webkit-scrollbar { height: 4px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); border-radius: 2px; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(201, 148, 26, 0.5); border-radius: 2px; } /* gold with opacity */
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { background: rgba(201, 148, 26, 0.8); }
