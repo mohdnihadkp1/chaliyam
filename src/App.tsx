@@ -24,7 +24,7 @@ export default function App() {
     <div className="min-h-screen flex flex-col antialiased selection:bg-gold/30 selection:text-gold-light transition-colors duration-300 bg-slate-950 text-slate-200">
       <Header />
       
-      <main className="flex-1 pb-24 md:pb-0">
+      <main className="flex-1 pb-4 md:pb-0">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/map" element={<MapSection />} />
