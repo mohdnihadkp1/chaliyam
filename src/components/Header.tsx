@@ -203,51 +203,51 @@ export default function Header() {
 
       {/* Mobile Side Drawer */}
       <div 
-        className={`lg:hidden fixed right-0 top-[64px] md:top-[76px] bottom-0 w-[85vw] sm:w-[320px] bg-white dark:bg-slate-900 border-l border-gray-200 dark:border-white/10 shadow-[-10px_0_40px_rgba(0,0,0,0.1)] dark:shadow-[-10px_0_40px_rgba(0,0,0,0.5)] z-40 flex flex-col p-6 transition-transform duration-300 ease-in-out pb-24 overflow-y-auto ${
+        className={`lg:hidden fixed right-0 top-[64px] md:top-[76px] bottom-0 w-[85vw] sm:w-[320px] bg-white dark:bg-slate-900 border-l border-gray-200 dark:border-white/10 shadow-[-10px_0_40px_rgba(0,0,0,0.1)] dark:shadow-[-10px_0_40px_rgba(0,0,0,0.5)] z-40 flex flex-col p-4 transition-transform duration-300 ease-in-out pb-20 overflow-y-auto ${
           isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        <div className="flex flex-col gap-2 mb-8">
-          <div className="text-xs font-bold text-gray-400 dark:text-slate-500 uppercase tracking-wider mb-2 ml-2">Navigation</div>
+        <div className="flex flex-col gap-1.5 mb-6">
+          <div className="text-[10px] sm:text-xs font-bold text-gray-400 dark:text-slate-500 uppercase tracking-wider mb-1 ml-2">Navigation</div>
           {allNavItems.map((item) => (
             <Link
               key={item.id}
               to={item.path}
               onClick={() => setIsMobileMenuOpen(false)}
-              className={`flex items-center gap-4 p-3 rounded-xl no-underline transition-all duration-200
+              className={`flex items-center gap-3 p-2 rounded-xl no-underline transition-all duration-200
                 ${activeSection === item.id 
                   ? 'bg-indigo-50 dark:bg-white/10 text-indigo-700 dark:text-gold-light border border-indigo-100 dark:border-white/10 shadow-sm' 
                   : 'text-gray-600 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-white/5 hover:text-indigo-600 dark:hover:text-gold-light'
                 }`}
             >
-              <div className={`p-2 rounded-lg ${activeSection === item.id ? 'bg-indigo-100 dark:bg-gold/20' : 'bg-gray-100 dark:bg-slate-800'}`}>
-                <item.icon size={20} className={activeSection === item.id ? 'text-indigo-600 dark:text-gold-light' : 'text-gray-500 dark:text-slate-400'} />
+              <div className={`p-1.5 rounded-lg ${activeSection === item.id ? 'bg-indigo-100 dark:bg-gold/20' : 'bg-gray-100 dark:bg-slate-800'}`}>
+                <item.icon size={18} className={activeSection === item.id ? 'text-indigo-600 dark:text-gold-light' : 'text-gray-500 dark:text-slate-400'} />
               </div>
-              <span className="text-base font-semibold">{item.label}</span>
+              <span className="text-sm font-semibold">{item.label}</span>
             </Link>
           ))}
           
-          <div className="h-px w-full bg-gray-200 dark:bg-white/10 my-4" />
+          <div className="h-px w-full bg-gray-200 dark:bg-white/10 my-2" />
           
           <button
             onClick={() => { setIsAboutModalOpen(true); setIsMobileMenuOpen(false); }}
-            className="flex items-center gap-4 p-3 rounded-xl no-underline transition-all duration-200 text-gray-600 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-white/5 hover:text-indigo-600 dark:hover:text-gold-light text-left"
+            className="flex items-center gap-3 p-2 rounded-xl no-underline transition-all duration-200 text-gray-600 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-white/5 hover:text-indigo-600 dark:hover:text-gold-light text-left"
           >
-            <div className="p-2 rounded-lg bg-gray-100 dark:bg-slate-800">
-              <Info size={20} className="text-gray-500 dark:text-slate-400" />
+            <div className="p-1.5 rounded-lg bg-gray-100 dark:bg-slate-800">
+              <Info size={18} className="text-gray-500 dark:text-slate-400" />
             </div>
-            <span className="text-base font-semibold">About Us</span>
+            <span className="text-sm font-semibold">About Us</span>
           </button>
 
           {deferredPrompt && (
             <button
               onClick={() => { handleInstallClick(); setIsMobileMenuOpen(false); }}
-              className="flex items-center gap-4 p-3 rounded-xl no-underline transition-all duration-200 text-indigo-700 dark:text-gold-light bg-indigo-50 dark:bg-gold/10 hover:bg-indigo-100 dark:hover:bg-gold/20 text-left border border-indigo-200 dark:border-gold/20 mt-2 shadow-sm"
+              className="flex items-center gap-3 p-2 rounded-xl no-underline transition-all duration-200 text-indigo-700 dark:text-gold-light bg-indigo-50 dark:bg-gold/10 hover:bg-indigo-100 dark:hover:bg-gold/20 text-left border border-indigo-200 dark:border-gold/20 mt-1 shadow-sm"
             >
-              <div className="p-2 rounded-lg bg-indigo-200 dark:bg-gold/20">
-                <Download size={20} className="text-indigo-700 dark:text-gold-light" />
+              <div className="p-1.5 rounded-lg bg-indigo-200 dark:bg-gold/20">
+                <Download size={18} className="text-indigo-700 dark:text-gold-light" />
               </div>
-              <span className="text-base font-bold">Install App</span>
+              <span className="text-sm font-bold">Install App</span>
             </button>
           )}
         </div>
