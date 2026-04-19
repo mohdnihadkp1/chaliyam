@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 import { BUSINESS_LISTINGS } from '../data';
-import { MessageCircle, X, Search, Plus, Briefcase, MapPin, Upload } from 'lucide-react';
+import { MessageCircle, X, Search, Plus, Briefcase, MapPin, Upload, Store } from 'lucide-react';
 
-export default function BusinessSection() {
+export default function MarketplaceSection() {
   const [selectedCategories, setSelectedCategories] = useState<string[]>(['all']);
   const [searchInput, setSearchInput] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
@@ -99,14 +99,14 @@ export default function BusinessSection() {
 
   return (
     <div className="py-4 md:py-6 px-3 md:px-4 max-w-7xl mx-auto animate-[fadeUp_0.4s_ease]">
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 md:gap-4 mb-5 md:mb-8">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-3 md:gap-4 mb-4 md:mb-6">
         <div>
-          <h2 className="font-yatra text-xl md:text-3xl mb-1 md:mb-1.5 flex items-center gap-2 md:gap-3 bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
-            <Briefcase className="text-gold-light w-6 h-6 md:w-7 md:h-7" />
-            Local <span className="text-gold-light">Business</span>
+          <h2 className="font-yatra text-xl md:text-3xl mb-1 flex items-center gap-2 bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
+            <Store className="text-gold-light w-6 h-6 md:w-7 md:h-7" />
+            Marketplace
           </h2>
-          <p className="text-slate-400 text-xs md:text-sm">
-            ചാലിയം ബിസിനസ് — Buy, sell, rent, and find services in Chaliyam
+          <p className="text-slate-400 text-[11px] md:text-sm">
+            Buy, sell, rent, and find local services in Chaliyam.
           </p>
         </div>
         <button 
@@ -114,43 +114,44 @@ export default function BusinessSection() {
             setUploadedImages([]);
             setIsAddModalOpen(true);
           }}
-          className="flex items-center justify-center gap-2 bg-gold/20 hover:bg-gold/30 border border-gold/30 text-gold-light px-4 py-2 md:px-5 md:py-2.5 rounded-lg md:rounded-xl font-medium transition-colors shadow-sm backdrop-blur-md text-sm md:text-base"
+          className="flex items-center justify-center gap-1.5 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 md:px-5 md:py-2.5 rounded-xl font-bold transition-colors shadow-sm text-sm"
         >
           <Plus size={18} />
-          Add New Listing
+          Create Listing
         </button>
       </div>
 
-      <div className="flex gap-2 md:gap-3 mb-4 md:mb-5">
+      <div className="flex gap-2 md:gap-3 mb-4">
         <div className="relative flex-1">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
             <Search size={16} className="text-slate-400 md:w-[18px] md:h-[18px]" />
           </div>
           <input 
             type="text" 
-            placeholder="Search listings by title or description..." 
+            placeholder="Search Marketplace" 
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
-            className="w-full pl-9 md:pl-10 pr-3 md:pr-4 py-2.5 md:py-3 rounded-lg md:rounded-xl border-[1.5px] border-white/10 bg-white/5 backdrop-blur-md text-xs md:text-sm font-sans text-slate-200 outline-none transition-colors focus:border-gold/50 placeholder:text-slate-500"
+            className="w-full pl-9 md:pl-10 pr-3 md:pr-4 py-2.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-xs md:text-sm font-sans text-slate-200 outline-none transition-colors focus:border-gold/50 focus:bg-white/10 placeholder:text-slate-500"
           />
         </div>
       </div>
 
-      <div className="flex gap-1.5 md:gap-2 mb-4 md:mb-5 flex-wrap">
+      {/* Pill Filters */}
+      <div className="flex gap-2 mb-4 overflow-x-auto pb-2 scrollbar-hide snap-x">
         {[
-          { id: 'all', label: 'All' },
+          { id: 'all', label: 'All Listings' },
           { id: 'sell', label: 'For Sale' },
           { id: 'buy', label: 'Wanted' },
-          { id: 'rent', label: 'Rent' },
+          { id: 'rent', label: 'Rentals' },
           { id: 'service', label: 'Services' },
         ].map(btn => (
           <button
             key={btn.id}
             onClick={() => toggleCategory(btn.id)}
-            className={`px-3 py-1.5 md:px-4 md:py-2 rounded-full border-[1.5px] text-xs md:text-[13px] cursor-pointer transition-all font-sans backdrop-blur-md
+            className={`px-4 py-1.5 rounded-full text-[13px] font-bold cursor-pointer transition-all whitespace-nowrap snap-start border
               ${selectedCategories.includes(btn.id)
-                ? 'bg-gold/20 text-gold-light border-gold/30 shadow-[0_0_15px_rgba(201,148,26,0.15)]' 
-                : 'bg-white/5 text-slate-300 border-white/10 hover:bg-white/10 hover:text-white hover:border-white/20'
+                ? 'bg-indigo-100 text-indigo-800 border-indigo-200 dark:bg-indigo-900/50 dark:text-indigo-200 dark:border-indigo-500/30' 
+                : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50 dark:bg-slate-800 dark:text-slate-200 dark:border-white/10 hover:dark:bg-slate-700'
               }`}
           >
             {btn.label}
@@ -158,41 +159,34 @@ export default function BusinessSection() {
         ))}
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      {/* Grid Layout like FB Marketplace */}
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 md:gap-4">
         {filteredBusiness.map((item, index) => (
           <div 
             key={index} 
             onClick={() => setSelectedItem(item)}
-            className="bg-white/5 backdrop-blur-md rounded-[14px] overflow-hidden border border-white/10 shadow-lg transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_20px_rgba(201,148,26,0.1)] cursor-pointer flex flex-col"
+            className="flex flex-col cursor-pointer group"
           >
-            {item.images && item.images.length > 0 && (
-              <div className="w-full h-32 bg-slate-900 overflow-hidden">
-                <img src={item.images[0]} alt={item.title} className="w-full h-full object-cover" />
-              </div>
-            )}
-            <div className="bg-slate-900/50 px-4 py-3 flex justify-between items-center border-b border-white/5">
-              <span className={`text-[11px] font-semibold uppercase tracking-wide px-2 py-1 rounded border
-                ${item.type === 'sell' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : ''}
-                ${item.type === 'buy' ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' : ''}
-                ${item.type === 'rent' ? 'bg-orange-500/10 text-orange-400 border-orange-500/20' : ''}
-                ${item.type === 'service' ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' : ''}
-              `}>
+            <div className="w-full aspect-square bg-slate-200 dark:bg-slate-800 rounded-lg overflow-hidden relative mb-2">
+              {item.images && item.images.length > 0 ? (
+                <img src={item.images[0]} alt={item.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" referrerPolicy="no-referrer" />
+              ) : (
+                <div className="w-full h-full flex flex-col items-center justify-center text-slate-400 dark:text-slate-500">
+                  <Briefcase size={32} className="mb-2 opacity-50" />
+                  <span className="text-[10px] font-medium uppercase tracking-wider">{item.typeLabel}</span>
+                </div>
+              )}
+              
+              {/* Type overlay at bottom-left inside image */}
+              <div className="absolute bottom-1 left-1 px-1.5 py-0.5 rounded text-[9px] font-bold uppercase tracking-wide bg-black/60 text-white backdrop-blur-sm">
                 {item.typeLabel}
-              </span>
-              <span className="text-[11px] text-slate-400">{item.date}</span>
+              </div>
             </div>
-            <div className="px-4 py-3.5 flex-1 flex flex-col">
-              <h4 
-                className="font-semibold text-sm mb-1.5 text-slate-200 hover:text-gold-light transition-colors cursor-pointer"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setSelectedItem(item);
-                }}
-              >
-                {item.title}
-              </h4>
-              <p className="text-[13px] text-slate-400 mb-2.5 line-clamp-2 flex-1">{item.desc}</p>
-              <div className="font-yatra text-lg text-gold-light">{item.price}</div>
+            
+            <div className="flex flex-col px-1">
+              <span className="font-bold text-sm md:text-base text-gray-900 dark:text-white leading-tight mb-0.5">{item.price}</span>
+              <span className="text-[13px] md:text-sm text-gray-700 dark:text-slate-300 line-clamp-1 mb-0.5">{item.title}</span>
+              <span className="text-[11px] text-gray-500 dark:text-slate-500">Chaliyam • {item.date}</span>
             </div>
           </div>
         ))}
@@ -204,109 +198,137 @@ export default function BusinessSection() {
         </div>
       )}
 
-      {/* Item Details Modal */}
+      {/* Marketplace Item Details Modal */}
       {selectedItem && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-white/10 w-full max-w-lg rounded-2xl overflow-hidden shadow-2xl animate-[fadeUp_0.3s_ease] max-h-[90vh] flex flex-col">
-            <div className="flex justify-between items-center p-4 border-b border-white/10 shrink-0">
-              <span className={`text-[11px] font-semibold uppercase tracking-wide px-2 py-1 rounded border
-                ${selectedItem.type === 'sell' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : ''}
-                ${selectedItem.type === 'buy' ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' : ''}
-                ${selectedItem.type === 'rent' ? 'bg-orange-500/10 text-orange-400 border-orange-500/20' : ''}
-                ${selectedItem.type === 'service' ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' : ''}
-              `}>
-                {selectedItem.typeLabel}
-              </span>
-              <button onClick={() => setSelectedItem(null)} className="text-slate-400 hover:text-red-400 transition-colors">
+        <div className="fixed inset-0 bg-black/60 dark:bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-0 md:p-4 animate-[fadeIn_0.2s_ease]">
+          <div className="bg-white dark:bg-slate-900 md:border md:border-white/10 w-full h-full md:h-auto md:max-h-[90vh] md:max-w-xl md:rounded-xl overflow-hidden shadow-2xl flex flex-col animate-[slideUp_0.3s_ease]">
+            
+            {/* Modal Header */}
+            <div className="flex justify-between items-center p-3 md:p-4 border-b border-gray-100 dark:border-white/10 shrink-0 sticky top-0 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md z-20">
+              <span className="font-bold text-base text-gray-900 dark:text-white">Listing Details</span>
+              <button 
+                onClick={() => setSelectedItem(null)} 
+                className="w-8 h-8 rounded-full bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-slate-400 flex items-center justify-center hover:bg-gray-200 hover:dark:bg-white/10 transition-colors"
+              >
                 <X size={20} />
               </button>
             </div>
-            <div className="p-5 overflow-y-auto">
-              {selectedItem.images && selectedItem.images.length > 0 && (
-                <div className="relative mb-4 rounded-xl overflow-hidden border border-white/10 group">
-                  <div className="aspect-video w-full bg-slate-950">
+
+            {/* Scrollable Content */}
+            <div className="flex-1 overflow-y-auto pb-24">
+              {/* Image Carousel */}
+              <div className="w-full aspect-[4/3] bg-gray-100 dark:bg-slate-950 relative group">
+                {selectedItem.images && selectedItem.images.length > 0 ? (
+                  <>
                     <img 
                       src={selectedItem.images[currentImageIndex]} 
-                      alt={`${selectedItem.title} - Image ${currentImageIndex + 1}`} 
-                      className="w-full h-full object-contain" 
+                      alt={selectedItem.title} 
+                      className="w-full h-full object-cover" 
+                      referrerPolicy="no-referrer"
                     />
+                    
+                    {selectedItem.images.length > 1 && (
+                      <>
+                        <button 
+                          onClick={() => setCurrentImageIndex(prev => prev === 0 ? selectedItem.images!.length - 1 : prev - 1)}
+                          className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/80 dark:bg-black/50 text-gray-800 dark:text-white flex items-center justify-center shadow-md hover:bg-white dark:hover:bg-black/80 transition-colors"
+                        >
+                          &larr;
+                        </button>
+                        <button 
+                          onClick={() => setCurrentImageIndex(prev => prev === selectedItem.images!.length - 1 ? 0 : prev + 1)}
+                          className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/80 dark:bg-black/50 text-gray-800 dark:text-white flex items-center justify-center shadow-md hover:bg-white dark:hover:bg-black/80 transition-colors"
+                        >
+                          &rarr;
+                        </button>
+                        <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-1.5">
+                          {selectedItem.images.map((_, idx) => (
+                            <button 
+                              key={idx}
+                              onClick={() => setCurrentImageIndex(idx)}
+                              className={`w-2 h-2 rounded-full transition-colors ${idx === currentImageIndex ? 'bg-white shadow-[0_0_2px_rgba(0,0,0,0.5)]' : 'bg-white/50'}`}
+                            />
+                          ))}
+                        </div>
+                      </>
+                    )}
+                  </>
+                ) : (
+                  <div className="w-full h-full flex flex-col items-center justify-center text-gray-400 dark:text-slate-500">
+                    <Briefcase size={48} className="mb-2 opacity-30" />
+                    <span className="text-sm font-medium">No Image Available</span>
                   </div>
-                  
-                  {selectedItem.images.length > 1 && (
-                    <>
-                      <button 
-                        onClick={() => setCurrentImageIndex(prev => prev === 0 ? selectedItem.images!.length - 1 : prev - 1)}
-                        className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/50 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/80"
-                      >
-                        &larr;
-                      </button>
-                      <button 
-                        onClick={() => setCurrentImageIndex(prev => prev === selectedItem.images!.length - 1 ? 0 : prev + 1)}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/50 text-white flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity hover:bg-black/80"
-                      >
-                        &rarr;
-                      </button>
-                      <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5">
-                        {selectedItem.images.map((_, idx) => (
-                          <button 
-                            key={idx}
-                            onClick={() => setCurrentImageIndex(idx)}
-                            className={`w-2 h-2 rounded-full transition-colors ${idx === currentImageIndex ? 'bg-gold-light' : 'bg-white/50 hover:bg-white/80'}`}
-                          />
-                        ))}
-                      </div>
-                    </>
-                  )}
-                </div>
-              )}
-              
-              <h3 className="font-semibold text-xl text-slate-200 mb-2">{selectedItem.title}</h3>
-              <p className="text-sm text-slate-400 mb-4">{selectedItem.date}</p>
-              <p className="text-base text-slate-300 mb-6 leading-relaxed bg-white/5 p-4 rounded-xl border border-white/10">{selectedItem.desc}</p>
-              
-              <div className="flex items-center justify-between mb-6">
-                <div className="font-yatra text-2xl text-gold-light">{selectedItem.price}</div>
-                {selectedItem.lat && selectedItem.lng && (
-                  <button 
-                    onClick={() => window.open(`https://www.google.com/maps/search/?api=1&query=${selectedItem.lat},${selectedItem.lng}`, '_blank')}
-                    className="flex items-center gap-1.5 text-sm font-medium text-blue-400 hover:text-blue-300 bg-blue-500/10 px-3 py-1.5 rounded-lg transition-colors border border-blue-500/20"
-                  >
-                    <MapPin size={16} />
-                    View on Google Maps
-                  </button>
                 )}
               </div>
-
-              {selectedItem.lat && selectedItem.lng && (
-                <div className="mb-6 rounded-xl overflow-hidden border border-white/10 h-48 relative">
-                  <iframe 
-                    width="100%" 
-                    height="100%" 
-                    style={{ border: 0 }} 
-                    loading="lazy" 
-                    allowFullScreen 
-                    referrerPolicy="no-referrer-when-downgrade" 
-                    src={`https://maps.google.com/maps?q=${selectedItem.lat},${selectedItem.lng}&z=15&output=embed`}
-                  ></iframe>
-                </div>
-              )}
-
-              {(selectedItem.contactName || selectedItem.contactDesc) && (
-                <div className="mb-6 border-t border-white/10 pt-4">
-                  <h4 className="text-sm font-semibold text-slate-200 mb-2">Contact Person</h4>
-                  {selectedItem.contactName && <p className="text-base font-medium text-gold-light">{selectedItem.contactName}</p>}
-                  {selectedItem.contactDesc && <p className="text-sm text-slate-400 mt-1">{selectedItem.contactDesc}</p>}
-                </div>
-              )}
               
+              {/* Core Details */}
+              <div className="p-4 bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-white/5">
+                <h3 className="font-bold text-2xl text-gray-900 dark:text-white mb-1 leading-tight">{selectedItem.title}</h3>
+                <div className="font-bold text-xl text-gray-900 dark:text-white mb-3">{selectedItem.price}</div>
+                <div className="flex gap-2 text-sm text-gray-500 dark:text-slate-400 font-medium">
+                  <span>Chaliyam</span>
+                  <span>•</span>
+                  <span>Listed {selectedItem.date}</span>
+                </div>
+              </div>
+
+              {/* Description */}
+              <div className="p-4 bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-white/5">
+                <p className="text-base text-gray-800 dark:text-slate-300 whitespace-pre-wrap leading-relaxed">{selectedItem.desc}</p>
+              </div>
+              
+              {/* Location Map if available */}
+              {selectedItem.lat && selectedItem.lng && (
+                <div className="p-4 bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-white/5">
+                  <h4 className="font-bold text-base text-gray-900 dark:text-white mb-3">Location</h4>
+                  <div className="w-full rounded-xl overflow-hidden h-[150px] relative border border-gray-200 dark:border-white/10 mb-2">
+                    <iframe 
+                      width="100%" 
+                      height="100%" 
+                      style={{ border: 0 }} 
+                      loading="lazy" 
+                      allowFullScreen 
+                      referrerPolicy="no-referrer-when-downgrade" 
+                      src={`https://maps.google.com/maps?q=${selectedItem.lat},${selectedItem.lng}&z=15&output=embed`}
+                    ></iframe>
+                  </div>
+                  <button 
+                    onClick={() => window.open(`https://www.google.com/maps/search/?api=1&query=${selectedItem.lat},${selectedItem.lng}`, '_blank')}
+                    className="text-sm font-semibold text-indigo-600 dark:text-blue-400 hover:underline flex items-center gap-1"
+                  >
+                    <MapPin size={16} /> Open in Google Maps
+                  </button>
+                </div>
+              )}
+
+              {/* Seller Info */}
+              {(selectedItem.contactName || selectedItem.contactDesc) && (
+                <div className="p-4 bg-white dark:bg-slate-900">
+                  <h4 className="font-bold text-base text-gray-900 dark:text-white mb-3">Seller Details</h4>
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 rounded-full bg-gray-200 dark:bg-slate-800 flex items-center justify-center text-gray-500 font-bold shrink-0">
+                      {selectedItem.contactName ? selectedItem.contactName.charAt(0) : 'S'}
+                    </div>
+                    <div>
+                      {selectedItem.contactName && <p className="font-bold text-base text-gray-900 dark:text-white">{selectedItem.contactName}</p>}
+                      {selectedItem.contactDesc && <p className="text-[13px] text-gray-500 dark:text-slate-400 mt-0.5">{selectedItem.contactDesc}</p>}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Sticky Action Footer */}
+            <div className="fixed md:absolute bottom-0 left-0 right-0 p-4 pb-6 md:pb-4 border-t border-gray-100 dark:border-white/10 bg-white dark:bg-slate-900 flex justify-center z-20 shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
               <button 
                 onClick={() => handleWhatsApp(selectedItem.contact, selectedItem.title)}
-                className="w-full flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#128C7E] text-white py-3.5 rounded-xl transition-colors font-medium text-base shadow-md"
+                className="w-full max-w-sm flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#1fbc5b] text-white font-bold py-3.5 rounded-xl transition-transform active:scale-95 shadow-md"
               >
                 <MessageCircle size={20} />
-                Contact via WhatsApp
+                Send WhatsApp Message
               </button>
             </div>
+            
           </div>
         </div>
       )}
