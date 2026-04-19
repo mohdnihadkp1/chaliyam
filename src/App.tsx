@@ -8,7 +8,7 @@ import BusSection from './components/BusSection';
 import EmergencySection from './components/EmergencySection';
 import DirectorySection from './components/DirectorySection';
 import NewsSection from './components/NewsSection';
-import BusinessSection from './components/BusinessSection';
+import MarketplaceSection from './components/MarketplaceSection';
 import PeopleSection from './components/PeopleSection';
 import CalicutStore from './components/CalicutStore';
 import Footer from './components/Footer';
@@ -33,7 +33,7 @@ export default function App() {
           <Route path="/emergency" element={<EmergencySection />} />
           <Route path="/directory" element={<DirectorySection />} />
           <Route path="/news" element={<NewsSection />} />
-          <Route path="/business" element={<BusinessSection />} />
+          <Route path="/marketplace" element={<MarketplaceSection />} />
           <Route path="/people" element={<PeopleSection />} />
           <Route path="/store" element={<CalicutStore />} />
         </Routes>
