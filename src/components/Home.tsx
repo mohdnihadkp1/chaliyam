@@ -58,7 +58,7 @@ export default function Home() {
     { id: 'directory', path: '/directory', label: 'Directory', icon: <Store size={32} /> },
     { id: 'people', path: '/people', label: 'Special Persons', icon: <Users size={32} /> },
     { id: 'news', path: '/news', label: 'News & Events', icon: <Newspaper size={32} /> },
-    { id: 'business', path: '/business', label: 'Business', icon: <Briefcase size={32} /> },
+    { id: 'marketplace', path: '/marketplace', label: 'Marketplace', icon: <Briefcase size={32} /> },
   ];
 
   const getWeatherIcon = (code: number, size: number = 24) => {
@@ -153,7 +153,7 @@ export default function Home() {
         <p className="font-malayalam text-sm md:text-base text-slate-400 mb-3 md:mb-4 relative z-10">നിങ്ങളുടെ നാടിന്റെ ഡിജിറ്റൽ കൂട്ടായ്മ</p>
         
         <p className="text-[11px] md:text-sm text-slate-300 max-w-[450px] mx-auto mb-5 md:mb-6 leading-[1.6] relative z-10">
-          Your community hub for Chaliyam — maps, bus timings, emergency contacts, local spots, businesses, and everything you need about our village.
+          Your community hub for Chaliyam — maps, bus timings, emergency contacts, local spots, a community marketplace, and everything you need about our village.
         </p>
         
         <div className="max-w-4xl mx-auto relative z-10 overflow-hidden rounded-xl shadow-2xl border border-white/10">
@@ -318,7 +318,7 @@ export default function Home() {
             </div>
             <h3 className="text-[10px] md:text-[13px] font-bold text-gray-900 dark:text-white mb-0.5 md:mb-1 relative z-10 leading-tight">Core Functions</h3>
             <p className="text-[8px] md:text-[11px] text-gray-500 dark:text-slate-300 leading-tight md:leading-snug relative z-10 line-clamp-2 md:line-clamp-none">
-              Track live weather, transit schedules & businesses.
+              Track live weather, transit schedules & active marketplace listings.
             </p>
           </div>
           
