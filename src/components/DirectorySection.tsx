@@ -58,7 +58,7 @@ export default function DirectorySection() {
             Local <span className="text-gold">Directory</span>
           </h2>
           <p className="text-slate-400 text-xs md:text-sm">
-            ചാലിയത്തിലെ ബിസിനസ് ഡയറക്ടറി — Find businesses and services near you
+            ചാലിയത്തിലെ ബിസിനസ് ഡയറക്ടറി — Find local shops and services near you
           </p>
         </div>
       </div>
