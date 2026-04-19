@@ -1,47 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://chaliyamconnect.com/</loc>
+    <loc>https://chaliyam.vercel.app/</loc>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://chaliyamconnect.com/map</loc>
+    <loc>https://chaliyam.vercel.app/map</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://chaliyamconnect.com/spots</loc>
+    <loc>https://chaliyam.vercel.app/spots</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://chaliyamconnect.com/bus</loc>
+    <loc>https://chaliyam.vercel.app/bus</loc>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://chaliyamconnect.com/emergency</loc>
+    <loc>https://chaliyam.vercel.app/emergency</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://chaliyamconnect.com/directory</loc>
+    <loc>https://chaliyam.vercel.app/directory</loc>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://chaliyamconnect.com/people</loc>
+    <loc>https://chaliyam.vercel.app/people</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://chaliyamconnect.com/news</loc>
+    <loc>https://chaliyam.vercel.app/news</loc>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://chaliyamconnect.com/business</loc>
+    <loc>https://chaliyam.vercel.app/marketplace</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://chaliyam.vercel.app/store</loc>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
