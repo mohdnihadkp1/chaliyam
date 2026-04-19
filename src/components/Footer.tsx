@@ -78,7 +78,7 @@ export default function Footer() {
               <li><button onClick={() => setIsAboutOpen(true)} className="text-sm font-medium hover:text-indigo-600 dark:hover:text-gold-light transition-colors text-left leading-tight w-full">About Us</button></li>
               <li><button onClick={() => setIsGuidelinesOpen(true)} className="text-sm font-medium hover:text-indigo-600 dark:hover:text-gold-light transition-colors text-left leading-tight w-full">Community Guidelines</button></li>
               <li><button onClick={() => setIsPrivacyOpen(true)} className="text-sm font-medium hover:text-indigo-600 dark:hover:text-gold-light transition-colors text-left leading-tight w-full">Privacy Policy</button></li>
-              <li><button onClick={() => { setFeedbackInitialType('contribute'); setIsFeedbackOpen(true); }} className="text-sm font-medium hover:text-indigo-600 dark:hover:text-gold-light transition-colors text-left leading-tight w-full inline-block">Submit Business</button></li>
+              <li><button onClick={() => { setFeedbackInitialType('contribute'); setIsFeedbackOpen(true); }} className="text-sm font-medium hover:text-indigo-600 dark:hover:text-gold-light transition-colors text-left leading-tight w-full inline-block">Submit Marketplace Listing</button></li>
               <li><button onClick={() => { setFeedbackInitialType('feedback'); setIsFeedbackOpen(true); }} className="text-sm font-medium flex items-center gap-2 hover:text-indigo-600 dark:hover:text-gold-light transition-colors text-left leading-tight w-full"><MessageSquare className="w-3.5 h-3.5" /> Send Feedback</button></li>
             </ul>
           </div>
@@ -121,7 +121,7 @@ export default function Footer() {
             </button>
             <h3 className="font-yatra text-2xl text-gold-light mb-3">About Chaliyam Connect</h3>
             <p className="text-[14px] text-slate-300 leading-relaxed mb-5">
-              Chaliyam Connect is a dedicated community platform designed to bring the people of Chaliyam together. It provides essential local information, bus timings, emergency contacts, and a directory of local businesses, all in one accessible place.
+              Chaliyam Connect is a dedicated community platform designed to bring the people of Chaliyam together. It provides essential local information, bus timings, emergency contacts, and a local marketplace, all in one accessible place.
             </p>
             <div className="bg-white/5 p-4 rounded-xl border border-white/10">
               <p className="text-[14px] text-slate-200 font-medium m-0">
@@ -150,7 +150,7 @@ export default function Footer() {
                 <strong>1. Respectful Interaction:</strong> Treat all community members with respect. Harassment, hate speech, and abusive language will not be tolerated in comments or submissions.
               </p>
               <p className="mb-3">
-                <strong>2. Accurate Information:</strong> When submitting business listings, news, or profiles, ensure the information is accurate and up-to-date. Do not post misleading content.
+                <strong>2. Accurate Information:</strong> When submitting marketplace listings, news, or profiles, ensure the information is accurate and up-to-date. Do not post misleading content.
               </p>
               <p className="mb-3">
                 <strong>3. No Spam:</strong> Avoid posting repetitive content, irrelevant links, or excessive self-promotion outside of the designated Business Directory.
@@ -159,7 +159,7 @@ export default function Footer() {
                 <strong>4. Privacy Matters:</strong> Do not share personal information (like phone numbers or addresses) of others without their explicit consent.
               </p>
               <p>
-                <strong>5. Local Relevance:</strong> Keep content relevant to the Chaliyam community, its people, events, and businesses.
+                <strong>5. Local Relevance:</strong> Keep content relevant to the Chaliyam community, its people, events, and marketplace listings.
               </p>
             </div>
             <div className="mt-5 pt-4 border-t border-white/10 flex justify-end">
@@ -186,7 +186,7 @@ export default function Footer() {
             </h3>
             <div className="text-[14px] text-slate-300 leading-relaxed max-h-[60vh] overflow-y-auto pr-2 custom-scrollbar">
               <p className="mb-3">
-                <strong>1. Information Collection:</strong> We collect minimal information necessary to provide community services. This may include names, contact numbers, and business details submitted voluntarily by users.
+                <strong>1. Information Collection:</strong> We collect minimal information necessary to provide community services. This may include names, contact numbers, and marketplace details submitted voluntarily by users.
               </p>
               <p className="mb-3">
                 <strong>2. Use of Information:</strong> The information provided is used solely for displaying in the community directory (People, Business, News) to help locals connect with each other.
