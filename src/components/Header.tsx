@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Map as MapIcon, Camera, Bus, Phone, Store, Newspaper, ClipboardList, Menu, X, Moon, Sun, Info, Users, Download, Palmtree, ShoppingBag, ChevronDown } from 'lucide-react';
+import { Home, Map as MapIcon, Camera, Bus, Phone, Store, Newspaper, ClipboardList, Briefcase, Menu, X, Moon, Sun, Info, Users, Download, Palmtree, ShoppingBag, ChevronDown } from 'lucide-react';
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -61,13 +61,13 @@ export default function Header() {
     { id: 'home', path: '/', label: 'Home', icon: Home },
     { id: 'store', path: '/store', label: 'Store', icon: ShoppingBag },
     { id: 'directory', path: '/directory', label: 'Directory', icon: Store },
-    { id: 'spots', path: '/spots', label: 'Spots', icon: Camera },
+    { id: 'marketplace', path: '/marketplace', label: 'Marketplace', icon: Briefcase },
     { id: 'bus', path: '/bus', label: 'Bus', icon: Bus },
     { id: 'news', path: '/news', label: 'News', icon: Newspaper },
   ];
 
   const moreNavItems = [
-    { id: 'business', path: '/business', label: 'Business', icon: ClipboardList },
+    { id: 'spots', path: '/spots', label: 'Spots', icon: Camera },
     { id: 'people', path: '/people', label: 'People', icon: Users },
     { id: 'map', path: '/map', label: 'Map', icon: MapIcon },
     { id: 'emergency', path: '/emergency', label: 'Emergency', icon: Phone },
@@ -319,7 +319,7 @@ export default function Header() {
                 Chaliyam Connect is a dedicated community platform designed to bring the people of Chaliyam closer together. Our mission is to provide a centralized hub for local information, essential services, and community updates.
               </p>
               <p className="text-sm text-gray-600 dark:text-slate-300 leading-relaxed mb-6">
-                From bus timings and emergency contacts to local news and a business directory, we aim to make daily life in Chaliyam more connected and convenient.
+                From bus timings and emergency contacts to local news and a community marketplace, we aim to make daily life in Chaliyam more connected and convenient.
               </p>
               
               <div className="bg-white dark:bg-slate-900 p-4 rounded-xl border border-gray-200 dark:border-white/10 shadow-sm">
