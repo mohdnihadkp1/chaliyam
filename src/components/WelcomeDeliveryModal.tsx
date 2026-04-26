@@ -46,6 +46,17 @@ export default function WelcomeDeliveryModal() {
     }
   }, []);
 
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   const currentStep = ONBOARDING_STEPS[stepIndex];
@@ -56,7 +67,7 @@ export default function WelcomeDeliveryModal() {
       setStepIndex(stepIndex + 1);
     } else {
       setIsOpen(false);
-      navigate("/marketplace");
+      navigate("/store");
     }
   };
 
@@ -66,7 +77,7 @@ export default function WelcomeDeliveryModal() {
     >
       {/* Backdrop */}
       <div 
-        className="absolute inset-0 bg-slate-900/60 backdrop-blur-md animate-fade-in" 
+        className="absolute inset-0 bg-slate-900/60 backdrop-blur-md animate-fade-in touch-none" 
       />
 
       {/* Modal Container */}
@@ -124,23 +135,25 @@ export default function WelcomeDeliveryModal() {
               <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </button>
             
-            <div className="flex justify-center gap-2 mt-2">
-              {ONBOARDING_STEPS.map((_, i) => (
-                <div 
-                  key={i} 
-                  className={`h-1.5 rounded-full transition-all duration-300 ${i === stepIndex ? 'w-6 bg-slate-800' : 'w-1.5 bg-slate-200'}`}
-                />
-              ))}
+            <div className="flex flex-col items-center justify-center mt-2 relative min-h-[24px]">
+              <div className="flex justify-center gap-2">
+                {ONBOARDING_STEPS.map((_, i) => (
+                  <div 
+                    key={i} 
+                    className={`h-1.5 rounded-full transition-all duration-300 ${i === stepIndex ? 'w-6 bg-slate-800' : 'w-1.5 bg-slate-200'}`}
+                  />
+                ))}
+              </div>
+              
+              {stepIndex < ONBOARDING_STEPS.length - 1 && (
+                <button
+                   onClick={() => setIsOpen(false)}
+                   className="mt-6 mb-1 text-xs font-semibold text-slate-400 hover:text-slate-600 transition-colors"
+                >
+                  Skip intro
+                </button>
+              )}
             </div>
-            
-            {stepIndex < ONBOARDING_STEPS.length - 1 && (
-              <button
-                 onClick={() => setIsOpen(false)}
-                 className="absolute bottom-4 right-0 left-0 mx-auto text-xs font-semibold text-slate-400 hover:text-slate-600 transition-colors"
-              >
-                Skip intro
-              </button>
-            )}
           </div>
         </div>
       </div>
