@@ -1,4 +1,7 @@
+import { useNavigate, useSearchParams } from "react-router-dom";
 import InFeedAdCard from "./InFeedAdCard";
+import { ShareModal } from './ShareModal';
+import { advancedShare } from '../lib/shareUtils';
 import React from "react";
 import { Helmet } from "react-helmet-async";
 import { useState } from"react";
@@ -21,6 +24,7 @@ import {
  Newspaper,
 } from"lucide-react";
 export default function NewsSection() {
+  const navigate = useNavigate();
  const [searchQuery, setSearchQuery] = useState("");
  const [filterDate, setFilterDate] = useState("");
  const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
@@ -35,7 +39,7 @@ export default function NewsSection() {
  const [expandedItems, setExpandedItems] = useState<Set<number>>(new Set());
  const [searchParams, setSearchParams] = useSearchParams();
   const selectedId = searchParams.get("id");
-  const shareModal = NEWS_UPDATES.find((d: any) => String(d.id || d.id) === selectedId) || null;
+  const shareModal = NEWS.find((d: any) => String(d.id || d.id) === selectedId) || null;
   const setShareModal = (item: any) => {
     if (item) {
       searchParams.set("id", String(item.id || item.id));
@@ -68,19 +72,16 @@ export default function NewsSection() {
  }
  setExpandedItems(newExpanded);
  };
- const handleShare = (news: any) => {
- if (navigator.share) {
- navigator
- .share({
- title: news.title,
- text: news.desc,
- url: window.location.href,
- })
- .catch(console.error);
- } else {
- setShareModal(news);
- }
- };
+ const handleShare = async (news: any) => {
+    const data = {
+       title: news.title,
+       text: news.desc,
+       url: window.location.origin + window.location.pathname + "?id=" + (news.id || news.id),
+       imageUrl: news.image
+    };
+    const success = await advancedShare(data);
+    if (!success) setShareModal(news);
+  };
  const copyToClipboard = () => {
  if (!shareModal) return;
  const text = `${shareModal.title}\n${shareModal.desc}\n\nRead more on Chaliyam Connect: ${window.location.href}`;
@@ -134,7 +135,7 @@ export default function NewsSection() {
             {`${JSON.stringify({
               "@context": "https://schema.org",
               "@type": "ItemList",
-              "itemListElement": NEWS_UPDATES.slice(0, 10).map((item: any, index: number) => ({
+              "itemListElement": NEWS.slice(0, 10).map((item: any, index: number) => ({
                 "@type": "ListItem",
                 "position": index + 1,
                 "url": "https://chaliyam-connect.web.app" + window.location.pathname + "?id=" + (item.id || item.id)
@@ -178,8 +179,16 @@ export default function NewsSection() {
  placeholder="Search news, events, announcements..."
  value={searchQuery}
  onChange={(e) => setSearchQuery(e.target.value)}
- className="w-full pl-9 md:pl-10 pr-3 md:pr-4 py-2.5 md:py-3 rounded-lg md:rounded-xl border border-[var(--color-outline)] bg-slate-50 backdrop-blur-md text-xs md:text-sm font-sans text-slate-800 outline-none transition-colors focus:border-[var(--color-primary)] placeholder:text-slate-500 shadow-inner"
+ className="w-full pl-9 md:pl-10 pr-10 md:pr-11 py-2.5 md:py-3 rounded-lg md:rounded-xl border border-[var(--color-outline)] bg-slate-50 backdrop-blur-md text-xs md:text-sm font-sans text-slate-800 outline-none transition-colors focus:border-[var(--color-primary)] placeholder:text-slate-500 shadow-inner"
  />
+ {searchQuery && (
+   <button 
+     onClick={() => setSearchQuery("")}
+     className="absolute right-2 md:right-3 top-[50%] -translate-y-[50%] text-slate-400 hover:text-slate-600 bg-slate-200/50 hover:bg-slate-200 rounded-full w-10 h-10 flex items-center justify-center transition-colors"
+   >
+     <X size={14} />
+   </button>
+ )}
  </div>
  <div className="relative">
  
@@ -325,9 +334,19 @@ export default function NewsSection() {
  )}
  </button>
  </div>
- <div className="mt-auto pt-4 border-t border-[var(--color-outline)] flex justify-end">
+ <div className="mt-auto pt-4 border-t border-[var(--color-outline)] items-center justify-between">
  
  <button
+    onClick={(e) => {
+      e.stopPropagation();
+      const text = `*Suggest Edit for ${news.title}*\n\nI would like to suggest changes for ${news.title}:\n\nPlease describe the changes below:\n\n`;
+      window.open(`https://wa.me/919846750898?text=${encodeURIComponent(text)}`, '_blank');
+    }}
+    className="text-[11px] text-slate-400 hover:text-slate-600 transition-colors font-medium border-b border-transparent hover:border-slate-300 pb-0.5"
+  >
+    Report Issue
+  </button>
+  <button
  onClick={(e) => {
  e.stopPropagation();
  handleShare(news);
@@ -347,172 +366,14 @@ export default function NewsSection() {
  </div>
  )}
  </div>
- {/* Share Modal */}
- {shareModal && (
- <div className="fixed inset-0 bg-slate-950/60 backdrop-blur-md z-[100] flex items-center justify-center p-4">
  
- <div className="bg-[var(--color-surface)] border border-[var(--color-outline)] w-full max-w-sm rounded-2xl overflow-hidden shadow-2xl animate-scale-up-center">
- 
- <div className="flex justify-between items-center p-4 border-b border-[var(--color-outline)] bg-slate-50">
- 
- <h3 className="font-semibold text-lg text-[var(--color-primary)]">
- Share News
- </h3>
- <button
- onClick={() => setShareModal(null)}
- className="text-slate-500 hover:text-[var(--color-danger)] transition-colors bg-slate-50 p-1.5 rounded-full border border-[var(--color-outline)]"
- >
- 
- <X size={18} />
- </button>
- </div>
- <div className="p-5 flex flex-col gap-3">
- 
- <button
- onClick={shareToWhatsApp}
- className="w-full flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold py-3 rounded-xl font-medium transition-colors shadow-[0_0_15px_rgba(37,211,102,0.2 active:scale-95 transition-all duration-150"
- >
- 
- <MessageCircle size={20} /> Share via WhatsApp
- </button>
- <button
- onClick={copyToClipboard}
- className="w-full flex items-center justify-center gap-2 bg-slate-50 hover:bg-white/10 text-slate-800 py-3 rounded-xl font-medium transition-colors border border-[var(--color-outline)] active:scale-95 transition-all duration-150"
- >
- 
- <Copy size={20} /> Copy Link
- </button>
- </div>
- </div>
- </div>
- )}
- {isSubmitModalOpen && (
- <div className="fixed inset-0 bg-slate-950/60 backdrop-blur-md z-[100] flex items-center justify-center p-4">
- 
- <div className="bg-[var(--color-surface)] border border-[var(--color-outline)] rounded-2xl w-full max-w-md overflow-hidden shadow-2xl animate-scale-up-center">
- 
- <div className="bg-slate-50 border-b border-[var(--color-outline)] p-4 flex items-center justify-between text-white">
- 
- <h3 className="font-yatra text-xl text-[var(--color-primary)]">
- Submit News / Event
- </h3>
- <button
- onClick={() => setIsSubmitModalOpen(false)}
- className="w-8 h-8 flex items-center justify-center rounded-full bg-slate-50 hover:bg-white/10 hover:text-[var(--color-danger)] text-slate-500 transition-colors border border-[var(--color-outline)]"
- >
- 
- <X size={18} />
- </button>
- </div>
- <form onSubmit={handleSubmit} className="p-5 flex flex-col gap-4">
- 
- <div>
- 
- <label className="block text-sm font-medium text-slate-700 font-semibold ml-1 mb-1">
- Type
- </label>
- <select
- value={formData.type}
- onChange={(e) =>
- setFormData({ ...formData, type: e.target.value })
- }
- className="w-full px-3 py-2.5 rounded-xl border border-[var(--color-outline)] bg-slate-50 text-slate-800 outline-none focus:border-[var(--color-primary)] focus:bg-white/10 appearance-none shadow-inner"
- required
- >
- 
- <option value="Event" className="bg-[var(--color-surface)]">
- Event
- </option>
- <option value="News" className="bg-[var(--color-surface)]">
- News
- </option>
- <option value="Notice" className="bg-[var(--color-surface)]">
- Notice
- </option>
- <option value="Alert" className="bg-[var(--color-surface)]">
- Alert
- </option>
- <option value="Sports" className="bg-[var(--color-surface)]">
- Sports
- </option>
- <option value="Govt" className="bg-[var(--color-surface)]">
- Govt
- </option>
- </select>
- </div>
- <div>
- 
- <label className="block text-sm font-medium text-slate-700 font-semibold ml-1 mb-1">
- Title
- </label>
- <input
- type="text"
- value={formData.title}
- onChange={(e) =>
- setFormData({ ...formData, title: e.target.value })
- }
- className="w-full px-3 py-2.5 rounded-xl border border-[var(--color-outline)] bg-slate-50 border-slate-200 text-slate-800 outline-none focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 placeholder:text-slate-400 font-medium transition-all"
- placeholder="e.g. Football Tournament"
- required
- />
- </div>
- <div>
- 
- <label className="block text-sm font-medium text-slate-700 font-semibold ml-1 mb-1">
- Date / Time
- </label>
- <input
- type="text"
- value={formData.date}
- onChange={(e) =>
- setFormData({ ...formData, date: e.target.value })
- }
- className="w-full px-3 py-2.5 rounded-xl border border-[var(--color-outline)] bg-slate-50 border-slate-200 text-slate-800 outline-none focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 placeholder:text-slate-400 font-medium transition-all"
- placeholder="e.g. Next Sunday, 4 PM"
- required
- />
- </div>
- <div>
- 
- <label className="block text-sm font-medium text-slate-700 font-semibold ml-1 mb-1">
- Description
- </label>
- <textarea
- value={formData.desc}
- onChange={(e) =>
- setFormData({ ...formData, desc: e.target.value })
- }
- className="w-full px-3 py-2.5 rounded-xl border border-[var(--color-outline)] bg-slate-50 text-slate-800 outline-none focus:border-[var(--color-primary)] focus:bg-white/10 min-h-[100px] resize-none placeholder:text-slate-500 shadow-inner"
- placeholder="Provide details about the news or event..."
- required
- />
- </div>
- <div>
- 
- <label className="block text-sm font-medium text-slate-700 font-semibold ml-1 mb-1">
- Your Name
- </label>
- <input
- type="text"
- value={formData.name}
- onChange={(e) =>
- setFormData({ ...formData, name: e.target.value })
- }
- className="w-full px-3 py-2.5 rounded-xl border border-[var(--color-outline)] bg-slate-50 border-slate-200 text-slate-800 outline-none focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 placeholder:text-slate-400 font-medium transition-all"
- placeholder="Your name for reference"
- required
- />
- </div>
- <button
- type="submit"
- className="w-full bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold font-medium py-3 rounded-xl transition-colors mt-2 shadow-[0_0_15px_rgba(37,211,102,0.2 active:scale-95 transition-all duration-150"
- >
- 
- Send via WhatsApp
- </button>
- </form>
- </div>
- </div>
- )}
- </div></>);
+      <ShareModal 
+        isOpen={!!shareModal} 
+        onClose={() => setShareModal(null)} 
+        title={shareModal?.title || ""} 
+        text={shareModal?.desc || ""} 
+        url={window.location.origin + window.location.pathname + "?id=" + (shareModal as any)?.id} 
+        imageUrl={shareModal?.image || ""} 
+      />
+</div></>);
 }

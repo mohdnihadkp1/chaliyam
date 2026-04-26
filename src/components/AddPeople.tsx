@@ -15,11 +15,15 @@ export default function AddPeople() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`People Profile Submission: ${formData.name}`);
-    const body = encodeURIComponent(
-      `Name: ${formData.name}\nRole: ${formData.role}\nCategory: ${formData.category}\nPhone/Email: ${formData.phone}\nWebsite: ${formData.website}\nImage: ${formData.image}`
-    );
-    window.location.href = `mailto:mohdnihadkp@gmail.com?subject=${subject}&body=${body}`;
+    const message = `*New Profile Submission*
+
+*Name:* ${formData.name}
+*Role:* ${formData.role}
+*Category:* ${formData.category}
+*Phone/Email:* ${formData.phone}
+*Website:* ${formData.website || 'N/A'}
+*Image:* ${formData.image || 'N/A'}`;
+    window.open(`https://wa.me/919846750898?text=${encodeURIComponent(message)}`, '_blank');
     navigate("/people");
   };
 

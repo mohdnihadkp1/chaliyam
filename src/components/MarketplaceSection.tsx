@@ -1,3 +1,6 @@
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { ShareModal } from './ShareModal';
+import { advancedShare } from '../lib/shareUtils';
 import React from 'react';
 import { Helmet } from "react-helmet-async";
 import { useState, useRef, useEffect } from"react";
@@ -13,16 +16,19 @@ import {
  MapPin,
  Upload,
  Store,
-} from"lucide-react";
+  Share2,
+} from 'lucide-react';
 export default function MarketplaceSection() {
+  const navigate = useNavigate();
  const [selectedCategories, setSelectedCategories] = useState<string[]>([
 "all",
  ]);
  const [searchInput, setSearchInput] = useState("");
  const [searchQuery, setSearchQuery] = useState("");
- const [searchParams, setSearchParams] = useSearchParams();
+ const [shareData, setShareData] = useState<{title: string, text?: string, url: string, imageUrl?: string} | null>(null);
+  const [searchParams, setSearchParams] = useSearchParams();
   const selectedId = searchParams.get("id");
-  const selectedItem = MARKETPLACE.find((d: any) => String(d.id || d.id) === selectedId) || null;
+  const selectedItem = BUSINESS_LISTINGS.find((d: any) => String(d.id || d.id) === selectedId) || null;
   const setSelectedItem = (item: any) => {
     if (item) {
       searchParams.set("id", String(item.id || item.id));
@@ -45,6 +51,11 @@ export default function MarketplaceSection() {
  /* Reset image index when opening a new item */ useEffect(() => {
  setCurrentImageIndex(0);
  }, [selectedItem]);
+ const doShare = async (data: {title: string, text?: string, url: string, imageUrl?: string}) => {
+   const success = await advancedShare(data);
+   if (!success) setShareData(data);
+ };
+
  const toggleCategory = (categoryId: string) => {
  if (categoryId ==="all") {
  setSelectedCategories(["all"]);
@@ -53,7 +64,8 @@ export default function MarketplaceSection() {
  setSelectedCategories((prev) => {
  const newSelection = prev.filter((id) => id !=="all");
  if (newSelection.includes(categoryId)) {
- const filtered = newSelection.filter((id) => id !== categoryId);
+
+  const filtered = newSelection.filter((id) => id !== categoryId);
  return filtered.length === 0 ? ["all"] : filtered;
  } else {
  return [...newSelection, categoryId];
@@ -121,14 +133,14 @@ export default function MarketplaceSection() {
       <Helmet>
         {selectedItem ? (
           <script type="application/ld+json">
-            {`${JSON.stringify({ "@context": "https://schema.org", "@type": "Product", name: selectedItem.title, image: selectedItem.images?.[0] || selectedItem.image || "", description: selectedItem.desc, offers: { "@type": "Offer", price: selectedItem.price, priceCurrency: "INR", availability: "https://schema.org/InStock" } })}`}
+            {`${JSON.stringify({ "@context": "https://schema.org", "@type": "Product", name: selectedItem.title, image: (selectedItem as any).images?.[0] || (selectedItem as any).image || "", description: selectedItem.desc, offers: { "@type": "Offer", price: selectedItem.price, priceCurrency: "INR", availability: "https://schema.org/InStock" } })}`}
           </script>
         ) : (
           <script type="application/ld+json">
             {`${JSON.stringify({
               "@context": "https://schema.org",
               "@type": "ItemList",
-              "itemListElement": MARKETPLACE.slice(0, 10).map((item: any, index: number) => ({
+              "itemListElement": BUSINESS_LISTINGS.slice(0, 10).map((item: any, index: number) => ({
                 "@type": "ListItem",
                 "position": index + 1,
                 "url": "https://chaliyam-connect.web.app" + window.location.pathname + "?id=" + (item.id || item.id)
@@ -174,8 +186,16 @@ export default function MarketplaceSection() {
  placeholder="Search Marketplace"
  value={searchInput}
  onChange={(e) => setSearchInput(e.target.value)}
- className="w-full pl-11 pr-4 py-3 rounded-full border border-[var(--color-outline)] bg-[var(--color-surface)] text-sm font-sans text-slate-800 outline-none transition-colors focus:border-[var(--color-primary)] focus:ring-1 focus:ring-[var(--color-primary)] placeholder:text-slate-500 shadow-[0_2px_10px_rgba(0,0,0,0.02)]"
+ className="w-full pl-11 pr-11 py-3 rounded-full border border-[var(--color-outline)] bg-[var(--color-surface)] text-sm font-sans text-slate-800 outline-none transition-colors focus:border-[var(--color-primary)] focus:ring-1 focus:ring-[var(--color-primary)] placeholder:text-slate-500 shadow-[0_2px_10px_rgba(0,0,0,0.02)]"
  />
+ {searchInput && (
+   <button 
+     onClick={() => setSearchInput("")}
+     className="absolute right-3 top-[50%] -translate-y-[50%] text-slate-400 hover:text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-full w-10 h-10 flex items-center justify-center transition-colors"
+   >
+     <X size={14} />
+   </button>
+ )}
  </div>
  </div>
  {/* Pill Filters */}
@@ -228,7 +248,13 @@ export default function MarketplaceSection() {
  >
  
  <div className="w-full aspect-square bg-slate-50 relative border-b border-[var(--color-outline)] overflow-hidden">
- 
+ <button
+   onClick={(e) => { e.stopPropagation(); doShare({ title: item.title, text: item.desc, url: window.location.origin + window.location.pathname + "?id=" + item.id, imageUrl: item.images?.[0] }); }}
+   className="absolute top-2 right-2 p-1.5 md:p-2 bg-white/80 hover:bg-white backdrop-blur-sm text-slate-600 hover:text-[var(--color-primary)] rounded-full opacity-0 group-hover:opacity-100 transition-all z-20 shadow-sm border border-slate-100"
+   title="Share Listing"
+ >
+   <Share2 size={14} />
+ </button>
  {item.images && item.images.length > 0 ? (
  <img
  src={item.images[0]}
@@ -286,7 +312,7 @@ export default function MarketplaceSection() {
  </span>
  <button
  onClick={() => setSelectedItem(null)}
- className="w-8 h-8 rounded-full bg-slate-50 text-slate-500 flex items-center justify-center hover:bg-[var(--color-primary)] hover:text-[var(--color-on-primary)] transition-colors cursor-pointer"
+ className="min-w-10 min-h-10 w-10 h-10 rounded-full bg-slate-50 text-slate-500 flex items-center justify-center hover:bg-[var(--color-primary)] hover:text-[var(--color-on-primary)] transition-colors cursor-pointer"
  >
  
  <X size={20} />
@@ -447,19 +473,35 @@ export default function MarketplaceSection() {
  </div>
  </div>
  )}
- </div>
- {/* Sticky Action Footer */}
+ <div className="p-4 md:p-6 bg-[var(--color-surface)] flex justify-center pb-8 mt-4">
+    <button
+      onClick={() => {
+        const text = `*Suggest Edit for ${selectedItem.title}*\n\nI would like to suggest changes for ${selectedItem.title}:\n\nPlease describe the changes below:\n\n`;
+        window.open(`https://wa.me/919846750898?text=${encodeURIComponent(text)}`, '_blank');
+      }}
+      className="text-xs text-slate-500 hover:text-slate-800 transition-colors font-medium border-t border-slate-200 border-dashed pt-4 w-full flex justify-center"
+    >
+      Suggest an edit or report issue
+    </button>
+  </div>
+  </div>
+  {/* Sticky Action Footer */}
  <div className="fixed md:absolute bottom-0 left-0 right-0 p-4 pb-6 md:pb-4 border-t border-[var(--color-outline)] bg-[var(--color-surface)] flex justify-center z-20 shadow-[0_-4px_20px_rgba(0,0,0,0.05">
+ <div className="flex w-full max-w-sm gap-3">
  
  <button
- onClick={() =>
- handleWhatsApp(selectedItem.contact, selectedItem.title)
- }
+                 onClick={() => doShare({ title: selectedItem.title, text: selectedItem.desc, url: window.location.href, imageUrl: selectedItem.images?.[0] })}
+                 className="flex-shrink-0 flex items-center justify-center bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold p-3.5 rounded-full transition-transform active:scale-95 shadow-md border border-transparent"
+               >
+                 <Share2 size={20} />
+               </button>
+               <button onClick={() => handleWhatsApp(selectedItem.contact, selectedItem.title)}
  className="w-full max-w-sm flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#1fbc5b] text-white font-bold py-3.5 rounded-full transition-transform active:scale-95 shadow-md border border-transparent"
  >
  
  <MessageCircle size={20} /> Send WhatsApp Message
  </button>
+ </div>
  </div>
  </div>
  </div>
@@ -477,10 +519,10 @@ export default function MarketplaceSection() {
  </h3>
  <button
  onClick={() => setIsAddModalOpen(false)}
- className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center text-slate-500 hover:bg-[var(--color-primary)] hover:text-[var(--color-on-primary)] transition-colors"
+ className="min-w-10 min-h-10 w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-500 hover:bg-[var(--color-primary)] hover:text-[var(--color-on-primary)] transition-colors"
  >
  
- <X size={18} />
+ <X size={20} />
  </button>
  </div>
  <form

@@ -15,11 +15,8 @@ export default function AddDirectory() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = encodeURIComponent("New Directory Listing Suggestion");
-    const body = encodeURIComponent(
-      `Business Name: ${formData.name}\nCategory: ${formData.category}\nPhone: ${formData.phone}\nMap URL: ${formData.mapUrl}\nDescription: ${formData.desc}\nImage URL: ${formData.image}`
-    );
-    window.location.href = `mailto:mohdnihadkp@gmail.com?subject=${subject}&body=${body}`;
+    const message = `*New Directory Listing Suggestion*\n\n*Business Name:* ${formData.name}\n*Category:* ${formData.category}\n*Phone:* ${formData.phone}\n*Map URL:* ${formData.mapUrl || 'N/A'}\n*Description:* ${formData.desc || 'N/A'}\n*Image URL:* ${formData.image || 'N/A'}`;
+    window.open(`https://wa.me/919846750898?text=${encodeURIComponent(message)}`, "_blank");
     navigate("/directory");
   };
 

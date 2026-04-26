@@ -1,3 +1,4 @@
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useRef, useState } from"react";
 import L from"leaflet";
 import"leaflet/dist/leaflet.css";
@@ -28,6 +29,8 @@ import {
  Navigation,
 } from"lucide-react";
 import { renderToString } from"react-dom/server";
+import { ShareModal } from './ShareModal';
+import { advancedShare } from '../lib/shareUtils';
 let OfflineTileLayer: any = null;
 if (typeof window !=="undefined" && L.TileLayer) {
  OfflineTileLayer = L.TileLayer.extend({
@@ -72,6 +75,7 @@ if (typeof window !=="undefined" && L.TileLayer) {
  });
 }
 export default function MapSection() {
+  const navigate = useNavigate();
  const mapRef = useRef<HTMLDivElement>(null);
  const mapInstance = useRef<L.Map | null>(null);
  const markersLayer = useRef<L.MarkerClusterGroup | null>(null);
@@ -391,7 +395,7 @@ export default function MapSection() {
  iconAnchor: [19, 19],
  className: "",
  });
- const popupContent = ` <div style="text-align: center; min-width: 160px; padding: 4px; font-family: inherit;"> <h4 style="margin: 0 0 6px 0; font-size: 15px; color: #1a2e20; font-weight: 600;">${m.name}</h4> <span style="display: inline-block; margin-bottom: 12px; font-size: 10px; padding: 3px 8px; border-radius: 12px; background-color: ${m.color}20; color: ${m.color}; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">${m.type}</span> <br/> <a href="https://www.google.com/maps/dir/?api=1&destination=${m.lat},${m.lng}" target="_blank" rel="noopener noreferrer" style="display: block; background-color: #2d7a4f; color: white; padding: 8px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 500; transition: background-color 0.2s; box-shadow: 0 2px 4px rgba(45,122,79,0.3);"> Get Directions </a> </div> `;
+ const popupContent = ` <div style="text-align: center; min-width: 160px; padding: 4px; font-family: inherit;"> <h4 style="margin: 0 0 6px 0; font-size: 15px; color: #1a2e20; font-weight: 600;">${m.name}</h4> <span style="display: inline-block; margin-bottom: 12px; font-size: 10px; padding: 3px 8px; border-radius: 12px; background-color: ${m.color}20; color: ${m.color}; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">${m.type}</span> <br/> <button id="share-marker-btn" data-lat="${m.lat}" data-lng="${m.lng}" data-name="${m.name}" data-type="${m.type}" style="display: block; width: 100%; margin-bottom: 8px; background-color: #f8fafc; color: #475569; padding: 8px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 600; transition: background-color 0.2s; border: 1px solid #e2e8f0; cursor: pointer;"> Share Location </button> <a href="https://www.google.com/maps/dir/?api=1&destination=${m.lat},${m.lng}" target="_blank" rel="noopener noreferrer" style="display: block; background-color: #2d7a4f; color: white; padding: 8px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 500; transition: background-color 0.2s; box-shadow: 0 2px 4px rgba(45,122,79,0.3);"> Get Directions </a> <a href="https://wa.me/919846750898?text=${encodeURIComponent('*Suggest Edit/Report Issue for ' + m.name + '*\n\nI would like to suggest changes:\n\nPlease describe the changes below:\n\n')}" target="_blank" rel="noopener noreferrer" style="display: block; width: 100%; margin-top: 10px; color: #64748b; font-size: 11px; text-decoration: none; font-weight: 500;"> Report Issue </a> </div> `;
  const marker = L.marker([m.lat, m.lng], { icon })
  .addTo(markersLayer.current!)
  .bindPopup(popupContent);
@@ -409,6 +413,28 @@ export default function MapSection() {
  }
  }
  }
+ if (mapInstance.current) {
+    mapInstance.current.off('popupopen');
+    mapInstance.current.on('popupopen', (e: any) => {
+      const shareBtn = e.popup._contentNode?.querySelector('#share-marker-btn');
+      if (shareBtn) {
+        shareBtn.onclick = () => {
+          const lat = shareBtn.getAttribute('data-lat');
+          const lng = shareBtn.getAttribute('data-lng');
+          const name = shareBtn.getAttribute('data-name');
+          const type = shareBtn.getAttribute('data-type');
+          if (lat && lng && name) {
+             const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
+             doShare({
+                title: `${name} on Chaliyam Connect`,
+                text: `Location: ${name} (${type})\nCheck it out here:`,
+                url: mapsUrl
+             });
+          }
+        };
+      }
+    });
+  }
  return () => {
  /* Keep map instance alive, just clear layers if needed */
  };
@@ -802,6 +828,14 @@ export default function MapSection() {
  </div>{""}
  </div>
  )}{""}
- </div>
- );
+ <ShareModal 
+        isOpen={!!shareData} 
+        onClose={() => setShareData(null)} 
+        title={shareData?.title || ''}
+        text={shareData?.text || ''}
+        url={shareData?.url || ''}
+        imageUrl={shareData?.imageUrl}
+      />
+    </div>
+  );
 }

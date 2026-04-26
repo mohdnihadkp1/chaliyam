@@ -11,11 +11,11 @@ export default function ReportMap() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = encodeURIComponent("Map Update Suggestion");
-    const body = encodeURIComponent(
-      `Location: ${formData.location}\nDescription: ${formData.desc}`
-    );
-    window.location.href = `mailto:mohdnihadkp@gmail.com?subject=${subject}&body=${body}`;
+    const message = `*New Map Report*
+
+*Location:* ${formData.location}
+*Description:* ${formData.desc}`;
+    window.open(`https://wa.me/919846750898?text=${encodeURIComponent(message)}`, '_blank');
     navigate("/map");
   };
 

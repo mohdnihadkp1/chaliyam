@@ -1,5 +1,9 @@
 import InFeedAdCard from "./InFeedAdCard";
 import { GridBannerAd } from "./PromoBanners";
+import { ShareModal } from './ShareModal';
+import { advancedShare } from '../lib/shareUtils';
+import { useNavigate, useSearchParams } from "react-router-dom";
+
 import React from "react";
 import { Helmet } from "react-helmet-async";
 import { useState, useEffect } from"react";
@@ -15,7 +19,8 @@ import {
  Search,
  Plus,
  X,
-} from"lucide-react";
+  Share2,
+} from 'lucide-react';
 interface Person {
  id?: string;
  name: string;
@@ -26,7 +31,9 @@ interface Person {
  website?: string;
 }
 export default function PeopleSection() {
+  const navigate = useNavigate();
  const [filter, setFilter] = useState("all");
+ const [shareData, setShareData] = useState<{title: string, text?: string, url: string, imageUrl?: string} | null>(null);
  const [searchInput, setSearchInput] = useState("");
  const [searchQuery, setSearchQuery] = useState("");
  const [sortBy, setSortBy] = useState("name-asc");
@@ -46,7 +53,15 @@ export default function PeopleSection() {
  }, 300);
  return () => clearTimeout(timer);
  }, [searchInput]);
- const filteredPeople = PEOPLE.filter((p) => {
+ 
+  const doShare = async (data: {title: string, text?: string, url: string, imageUrl?: string}) => {
+    const success = await advancedShare(data);
+    if (!success) {
+      setShareData(data);
+    }
+  };
+
+  const filteredPeople = PEOPLE.filter((p) => {
  const matchesFilter = filter ==="all" || p.category === filter;
  const q = searchQuery.toLowerCase();
  const matchesSearch =
@@ -113,11 +128,7 @@ export default function PeopleSection() {
  return (
     <>
       <Helmet>
-        {selectedItem ? (
-          <script type="application/ld+json">
-            {`${JSON.stringify({ "@context": "https://schema.org", "@type": "Person", name: selectedItem.name, jobTitle: selectedItem.role, telephone: selectedItem.phone, url: selectedItem.website || "" })}`}
-          </script>
-        ) : (
+        
           <script type="application/ld+json">
             {`${JSON.stringify({
               "@context": "https://schema.org",
@@ -129,7 +140,6 @@ export default function PeopleSection() {
               }))
             })}`}
           </script>
-        )}
       </Helmet>
       
  <div className="py-4 md:py-6 px-3 md:px-4 max-w-7xl mx-auto animate-fade-in">
@@ -172,8 +182,16 @@ export default function PeopleSection() {
  placeholder="Search by name, role, or category..."
  value={searchInput}
  onChange={(e) => setSearchInput(e.target.value)}
- className="w-full pl-9 md:pl-10 pr-3 md:pr-4 py-2.5 md:py-3 rounded-lg md:rounded-xl border-[1.5px] border-[var(--color-outline)] bg-slate-50 backdrop-blur-md text-xs md:text-sm font-sans text-slate-800 outline-none transition-colors focus:border-[var(--color-primary)] placeholder:text-slate-500"
+ className="w-full pl-9 md:pl-10 pr-10 md:pr-11 py-2.5 md:py-3 rounded-lg md:rounded-xl border-[1.5px] border-[var(--color-outline)] bg-slate-50 backdrop-blur-md text-xs md:text-sm font-sans text-slate-800 outline-none transition-colors focus:border-[var(--color-primary)] placeholder:text-slate-500"
  />
+ {searchInput && (
+   <button 
+     onClick={() => setSearchInput("")}
+     className="absolute right-2 md:right-3 top-[50%] -translate-y-[50%] text-slate-400 hover:text-slate-600 bg-slate-200/50 hover:bg-slate-200 rounded-full w-10 h-10 flex items-center justify-center transition-colors"
+   >
+     <X size={14} />
+   </button>
+ )}
  </div>
  <select
  value={sortBy}
@@ -293,6 +311,13 @@ export default function PeopleSection() {
  </a>
  )}
  <div className="flex gap-2 mt-1">
+             <button
+               onClick={(e) => { e.stopPropagation(); doShare({ title: person.name, text: person.role, url: window.location.origin + window.location.pathname + "?id=" + person.id, imageUrl: person.image }); }}
+               className="px-3 flex items-center justify-center bg-white/10 hover:bg-white/20 text-slate-800 py-2 rounded-lg transition-colors border border-[var(--color-outline)]"
+               title="Share Profile"
+             >
+               <Share2 size={16} />
+             </button>
  
  <button
  onClick={() => handleWhatsApp(person.phone, person.name)}
@@ -320,9 +345,18 @@ export default function PeopleSection() {
  Edit
  </button>
  </div>
- </div>
- </div>
- </div></React.Fragment>))}
+ <button
+  onClick={(e) => {
+    e.stopPropagation();
+    const text = `*Suggest Edit/Report Issue for ${person.name}*\n\nI would like to suggest changes for ${person.name}:\n\nPlease describe the changes below:\n\n`;
+    window.open(`https://wa.me/919846750898?text=${encodeURIComponent(text)}`, '_blank');
+  }}
+  className="w-full flex justify-center text-[10px] text-slate-400 hover:text-slate-600 transition-colors font-medium border-t border-[var(--color-outline)] pt-2"
+>
+  Report Issue / Suggest Edit
+</button>
+</div>
+</div> </div></React.Fragment>))}
  {filteredPeople.length === 0 && (
  <div className="col-span-full py-10 text-center text-slate-500">
  

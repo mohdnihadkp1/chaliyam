@@ -158,10 +158,22 @@ export default function BusSection() {
           ))}
  </div>
  </div>
- )}
- </div>
-          ))}
- </div>
+  )}
+  <div className="pt-3 mt-3 border-t border-[var(--color-outline)]">
+    <button
+      onClick={(e) => {
+        e.stopPropagation();
+        const text = `*Suggest Edit/Report Issue for Bus ${bus.name} (${bus.time})*\n\nI would like to suggest changes:\n\nPlease describe the changes below:\n\n`;
+        window.open(`https://wa.me/919846750898?text=${encodeURIComponent(text)}`, '_blank');
+      }}
+      className="w-full flex justify-center text-[11px] text-[var(--color-on-surface-variant)] hover:text-[var(--color-primary)] transition-colors font-medium"
+    >
+      Report Issue / Suggest Edit
+    </button>
+  </div>
+  </div>
+           ))}
+  </div>
  {filteredBuses.length === 0 && (
  <div className="text-center py-10 text-[var(--color-on-surface-variant)]">
  

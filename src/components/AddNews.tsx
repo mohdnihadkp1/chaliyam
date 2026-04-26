@@ -14,11 +14,15 @@ export default function AddNews() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`News Submission: ${formData.title}`);
-    const body = encodeURIComponent(
-      `Type: ${formData.type}\nTitle: ${formData.title}\nDate: ${formData.date}\nDescription: ${formData.desc}\n\nSubmitted by: ${formData.name}`
-    );
-    window.location.href = `mailto:mohdnihadkp@gmail.com?subject=${subject}&body=${body}`;
+    const message = `*New News/Event Submission*
+
+*Type:* ${formData.type}
+*Title:* ${formData.title}
+*Date:* ${formData.date}
+*Description:* ${formData.desc}
+
+*Submitted by:* ${formData.name}`;
+    window.open(`https://wa.me/919846750898?text=${encodeURIComponent(message)}`, '_blank');
     navigate("/news");
   };
 

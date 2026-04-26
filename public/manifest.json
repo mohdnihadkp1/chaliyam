@@ -8,20 +8,10 @@
   "theme_color": "#4F46E5",
   "icons": [
     {
-      "src": "/icon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "/icon.svg",
-      "sizes": "192x192",
-      "type": "image/svg+xml"
-    },
-    {
-      "src": "/icon.svg",
+      "src": "https://raw.githubusercontent.com/mohdnihadkp1/GALLERY/refs/heads/main/icon_of_chaliyam_connect/icon.png?token=GHSAT0AAAAAADYMDMRQXHM7SEP3ABEBU6T22PNWDYQ",
       "sizes": "512x512",
-      "type": "image/svg+xml"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ],
   "categories": ["social", "shopping", "lifestyle"],

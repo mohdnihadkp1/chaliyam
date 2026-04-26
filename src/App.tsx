@@ -49,17 +49,37 @@ const routeSeo = {
 
 function DynamicHelmet() {
   const location = useLocation();
-  // We check if the exact path matches, or fallback to the generic prefix if needed.
-  // For dynamic paths with ID (e.g., /directory?id=xxx), the pathname is still /directory.
   const routeMeta = routeSeo[location.pathname as keyof typeof routeSeo] || { title: "Chaliyam Connect", desc: "Connecting the local community of Chaliyam." };
+
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Chaliyam Connect",
+    "url": "https://chaliyam.vercel.app/",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://chaliyam.vercel.app/directory?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  };
 
   return (
     <Helmet>
       <title>{routeMeta.title}</title>
       <meta name="description" content={routeMeta.desc} />
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
       <meta property="og:title" content={routeMeta.title} />
       <meta property="og:description" content={routeMeta.desc} />
-      <link rel="canonical" href={`https://chaliyam-connect.web.app${location.pathname}`} />
+      <meta property="og:site_name" content="Chaliyam Connect" />
+      <meta property="og:url" content={`https://chaliyam.vercel.app${location.pathname}`} />
+      <meta property="og:type" content="website" />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={routeMeta.title} />
+      <meta name="twitter:description" content={routeMeta.desc} />
+      <link rel="canonical" href={`https://chaliyam.vercel.app${location.pathname}`} />
+      <script type="application/ld+json">
+        {JSON.stringify(structuredData)}
+      </script>
     </Helmet>
   );
 }

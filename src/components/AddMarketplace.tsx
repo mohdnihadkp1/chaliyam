@@ -16,11 +16,17 @@ export default function AddMarketplace() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`Marketplace Listing: ${formData.title}`);
-    const body = encodeURIComponent(
-      `Type: ${formData.type}\nTitle: ${formData.title}\nPrice: ${formData.price}\nDescription: ${formData.desc}\n\nContact Name: ${formData.name}\nPhone: ${formData.phone}\nImage: ${formData.image}`
-    );
-    window.location.href = `mailto:mohdnihadkp@gmail.com?subject=${subject}&body=${body}`;
+    const message = `*New Marketplace Listing*
+
+*Type:* ${formData.type}
+*Title:* ${formData.title}
+*Price:* ${formData.price}
+*Description:* ${formData.desc}
+
+*Contact Name:* ${formData.name}
+*Phone:* ${formData.phone}
+*Image:* ${formData.image}`;
+    window.open(`https://wa.me/919846750898?text=${encodeURIComponent(message)}`, '_blank');
     navigate("/marketplace");
   };
 

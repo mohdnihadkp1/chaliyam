@@ -1,12 +1,7 @@
 User-agent: *
 Allow: /
-Disallow: /api/
-Disallow: /*?search=
-Disallow: /*&sort=
-Disallow: /*?filter=
 
-# Block AI crawlers from scraping private/sensitive data if necessary 
-# User-agent: CCBot
-# Disallow: /
+# Prevent AI bots from crawling useless internal endpoints if any (example)
+# Disallow: /api/
 
 Sitemap: https://chaliyam.vercel.app/sitemap.xml
