@@ -103,7 +103,7 @@ export default function Header() {
  {""}
  <div className="w-10 h-10 bg-[var(--color-primary-container)] rounded-2xl flex items-center justify-center text-[var(--color-on-primary-container)] shadow-sm transition-all hover:shadow-md overflow-hidden">
  {""}
- <img src="https://raw.githubusercontent.com/mohdnihadkp1/GALLERY/refs/heads/main/icon_of_chaliyam_connect/icon.png" alt="Chaliyam" className="w-full h-full object-cover" />{""}
+ <img src="https://raw.githubusercontent.com/mohdnihadkp1/GALLERY/refs/heads/main/icon_of_chaliyam_connect/vector.svg" alt="Chaliyam" className="w-full h-full object-cover" />{""}
  </div>{""}
  <div className="flex flex-col justify-center">
  {""}
