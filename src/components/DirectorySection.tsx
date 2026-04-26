@@ -227,19 +227,19 @@ export default function DirectorySection() {
    path="/directory" 
   />
  </div>
- <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 md:gap-4">
+ <div className="grid grid-cols-3 gap-2 md:gap-4 lg:gap-6">
  
  {filteredDirectory.map((item, index) => (
  <div
  key={index}
  onClick={() => setSelectedItem(item)}
- className="bg-white p-3 md:p-4 rounded-[1.25rem] border border-slate-100 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_30px_rgba(0,0,0,0.08)] hover:-translate-y-1.5 transition-all duration-300 ease-in-out w-full flex items-center justify-between cursor-pointer group relative overflow-hidden"
+ className="bg-white p-2 md:p-4 rounded-xl md:rounded-[1.25rem] border border-slate-100 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_30px_rgba(0,0,0,0.08)] hover:-translate-y-1 active:scale-95 transition-all duration-300 ease-in-out w-full flex flex-col items-center justify-center text-center cursor-pointer group relative overflow-hidden aspect-[4/5] md:aspect-auto md:min-h-[140px]"
  >
  
- <div className="flex items-center gap-3 md:gap-4 overflow-hidden">
+ <div className="flex flex-col items-center justify-center w-full h-full gap-2 md:gap-3">
  
  {item.image ? (
- <div className="w-14 h-14 md:w-16 md:h-16 rounded-xl overflow-hidden shrink-0 shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-[var(--color-outline)]">
+ <div className="w-10 h-10 md:w-16 md:h-16 rounded-full overflow-hidden shrink-0 shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-[var(--color-outline)] mb-1">
  
  <img
  src={item.image}
@@ -248,41 +248,24 @@ export default function DirectorySection() {
  />
  </div>
  ): (
- <div className="w-14 h-14 md:w-16 md:h-16 rounded-xl bg-[var(--color-primary-container)] text-[var(--color-on-primary-container)] flex items-center justify-center shrink-0 border border-[var(--color-outline)] shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
+ <div className="w-10 h-10 md:w-16 md:h-16 rounded-full bg-[var(--color-primary-container)] text-[var(--color-on-primary-container)] flex items-center justify-center shrink-0 border border-[var(--color-outline)] shadow-[0_2px_10px_rgba(0,0,0,0.02)] mb-1 group-hover:bg-[var(--color-primary)] transition-colors">
  
- {getDirectoryIcon(item.cat, item.name)}
+ <div className="scale-75 md:scale-100 group-hover:text-white transition-colors">{getDirectoryIcon(item.cat, item.name)}</div>
  </div>
  )}
- <div className="flex flex-col justify-center truncate">
+ <div className="flex flex-col justify-center items-center w-full">
  
- <h4 className="font-semibold text-sm md:text-base text-slate-800 leading-tight truncate tracking-tight">
+ <h4 className="font-semibold text-[11px] leading-tight md:text-sm text-slate-800 line-clamp-2 md:truncate mb-1 w-full px-1">
  {item.name}
  </h4>
- <div className="flex items-center gap-2 mt-1 truncate">
+ <div className="flex flex-col md:flex-row items-center gap-1 w-full justify-center">
  
- <span className="text-[11px] md:text-xs text-[var(--color-secondary)] bg-[var(--color-secondary)]/10 px-2.5 py-0.5 rounded-full font-medium inline-block shrink-0">
+ <span className="text-[9px] md:text-xs text-[var(--color-secondary)] bg-[var(--color-secondary)]/10 px-1.5 py-0.5 rounded-full font-medium inline-block shrink-0 truncate max-w-[90%]">
  
  {item.catLabel}
  </span>
- {item.rating && (
- <div className="flex items-center gap-1 text-[11px] md:text-xs font-semibold text-slate-500">
- 
- <Star
- size={12}
- className="fill-[#F59E0B] text-[#F59E0B]"
- />
- <span>{item.rating}</span>
- </div>
- )}
  </div>
  </div>
- </div>
- <div className="pl-2 shrink-0 text-slate-500">
- 
- <Store
- size={20}
- className="opacity-50 group-hover:opacity-100 group-hover:text-[var(--color-primary)] transition-all"
- />
  </div>
  </div>
  ))}
