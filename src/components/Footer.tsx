@@ -41,11 +41,11 @@ export default function Footer() {
  },
  ];
  return (
- <footer className="bg-[var(--color-surface)] text-[var(--color-on-surface-variant)] border-t border-[var(--color-outline)] mt-10 md:mt-16 pb-[100px] md:pb-0">
+ <footer className="bg-[var(--color-surface)] text-[var(--color-on-surface-variant)] border-t border-[var(--color-outline)] mt-8 md:mt-16 pb-[80px] md:pb-0">
  {""}
- <div className="max-w-7xl mx-auto px-4 md:px-6 py-10 md:py-16">
+ <div className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-16">
  {""}
- <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10 lg:gap-8">
+ <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-10 lg:gap-8">
  {""}
  {/* Brand Info */}{""}
  <div className="flex flex-col items-start text-left col-span-2 md:col-span-1 lg:col-span-1">
@@ -53,8 +53,8 @@ export default function Footer() {
  <div className="font-yatra text-2xl lg:text-3xl text-[var(--color-primary)] mb-3 md:mb-4 flex items-center gap-2 md:gap-3">
  {""}
  <div className="flex items-center justify-center text-[var(--color-primary)] shrink-0">
- {""}
-  <Logo className="h-8 w-auto md:h-10 object-contain" />
+  {""}
+  <Logo className="h-8 md:h-10 w-auto object-contain rounded-lg shadow-sm" />
  </div>{""}
  <span className="text-[var(--color-primary)]">
  {""}
@@ -63,8 +63,7 @@ export default function Footer() {
  </div>{""}
  <p className="text-sm md:text-sm leading-relaxed mb-5 md:mb-6 max-w-xs">
  {""}
- Kozhikode, Kerala's premier coastal community block. Connecting
- locals through a reliable, integrated community platform.{""}
+ A historic coastal landmark where the Chaliyar meets the sea, embodying Malabar’s rich maritime legacy and natural beauty.{""}
  </p>{""}
  <div className="flex gap-2.5 md:gap-3">
  {""}

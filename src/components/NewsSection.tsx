@@ -3,6 +3,7 @@ import InFeedAdCard from "./InFeedAdCard";
 import { ShareModal } from './ShareModal';
 import { advancedShare } from '../lib/shareUtils';
 import React from "react";
+import { formatLocalTime } from "../lib/utils";
 import { Helmet } from "react-helmet-async";
 import { useState } from"react";
 import { NEWS } from"../data";
@@ -278,7 +279,7 @@ export default function NewsSection() {
  </span>
  </div>
  <div className="text-[11px] opacity-70 mt-1 flex items-center gap-1">
- <Calendar size={12} /> {news.date}
+ <Calendar size={12} /> {formatLocalTime(news.date)}
  </div>
  </div>
  </div>
@@ -288,7 +289,7 @@ export default function NewsSection() {
  <div className="flex justify-between items-start mb-2">
  
  <div className="text-[11px] text-[var(--color-primary)] font-medium flex items-center gap-1">
- <Calendar size={12} /> {news.date}
+ <Calendar size={12} /> {formatLocalTime(news.date)}
  </div>
  {(news as any).eventDate && (
  <div className="text-[10px] bg-white/10 text-[var(--color-primary)] px-2 py-1 rounded-md font-semibold border border-[var(--color-outline)]">

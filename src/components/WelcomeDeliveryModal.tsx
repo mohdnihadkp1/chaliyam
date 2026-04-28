@@ -73,7 +73,7 @@ export default function WelcomeDeliveryModal() {
 
   return (
     <div
-      className="fixed inset-0 z-[200] flex flex-col items-center justify-end md:justify-center p-4 sm:p-6"
+      className="fixed inset-0 z-[200] flex flex-col items-center justify-center p-4 sm:p-6"
     >
       {/* Backdrop */}
       <div 
@@ -82,7 +82,7 @@ export default function WelcomeDeliveryModal() {
 
       {/* Modal Container */}
       <div
-        className="bg-white w-full max-w-md rounded-[2.5rem] overflow-hidden shadow-2xl relative animate-scale-up-center z-10 flex flex-col mb-safe-bottom"
+        className="bg-white w-[90%] max-w-sm sm:max-w-md rounded-3xl overflow-hidden shadow-2xl relative animate-scale-up-center z-10 flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -93,7 +93,7 @@ export default function WelcomeDeliveryModal() {
         </button>
 
         {/* Hero Image Section */}
-        <div className="h-48 md:h-56 relative overflow-hidden bg-slate-100">
+        <div className="h-40 relative overflow-hidden bg-slate-100">
           <img
             key={currentStep.image} // Force re-render on step change
             src={currentStep.image}
@@ -104,9 +104,9 @@ export default function WelcomeDeliveryModal() {
         </div>
 
         {/* Content Section */}
-        <div className="px-8 pb-8 pt-2 text-center relative z-10">
-          <div className="bg-white w-20 h-20 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-[0_8px_30px_rgba(0,0,0,0.12)] -mt-12 border-4 border-white rotate-3 transition-all duration-300">
-            <Icon size={32} className={`text-transparent bg-clip-text bg-gradient-to-tr ${currentStep.color} [&>path]:stroke-[url(#grad)] [&>circle]:stroke-[url(#grad)] [&>rect]:stroke-[url(#grad)]`} strokeWidth={2} color="#000" />
+        <div className="px-6 pb-6 pt-2 text-center relative z-10">
+          <div className="bg-white w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-[0_8px_30px_rgba(0,0,0,0.12)] -mt-10 border-4 border-white rotate-3 transition-all duration-300">
+            <Icon size={28} className={`text-transparent bg-clip-text bg-gradient-to-tr ${currentStep.color} [&>path]:stroke-[url(#grad)] [&>circle]:stroke-[url(#grad)] [&>rect]:stroke-[url(#grad)]`} strokeWidth={2} color="#000" />
             <svg width="0" height="0">
               <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop stopColor={stepIndex === 0 ? "#4F46E5" : stepIndex === 1 ? "#10B981" : "#F59E0B"} offset="0%" />
@@ -115,21 +115,21 @@ export default function WelcomeDeliveryModal() {
             </svg>
           </div>
           
-          <h2 className="text-2xl md:text-3xl font-extrabold text-slate-800 mb-3 tracking-tight animate-[fadeInUp_0.4s_ease-out]">
+          <h2 className="text-xl sm:text-2xl font-extrabold text-slate-800 mb-2 tracking-tight animate-[fadeInUp_0.4s_ease-out]">
             {currentStep.title} <br/>
             <span className={`text-transparent bg-clip-text bg-gradient-to-r ${currentStep.color}`}>
               {currentStep.highlight}
             </span>
           </h2>
           
-          <p className="text-slate-500 font-medium mb-8 text-sm leading-relaxed max-w-[280px] mx-auto min-h-[60px] animate-[fadeInUp_0.5s_ease-out]">
+          <p className="text-slate-500 font-medium mb-6 text-sm leading-relaxed max-w-[280px] mx-auto min-h-[60px] animate-[fadeInUp_0.5s_ease-out]">
             {currentStep.desc}
           </p>
 
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-3">
             <button
               onClick={nextStep}
-              className="group w-full bg-slate-900 hover:bg-black text-white font-bold py-4 px-6 rounded-2xl shadow-xl shadow-slate-900/20 active:scale-[0.98] transition-all flex items-center justify-center gap-2 text-base"
+              className="group w-full bg-slate-900 hover:bg-black text-white font-bold py-3.5 px-6 rounded-2xl shadow-xl shadow-slate-900/20 active:scale-[0.98] transition-all flex items-center justify-center gap-2 text-sm sm:text-base"
             >
               {stepIndex === ONBOARDING_STEPS.length - 1 ? "Start Shopping" : "Continue"} 
               <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
@@ -148,7 +148,7 @@ export default function WelcomeDeliveryModal() {
               {stepIndex < ONBOARDING_STEPS.length - 1 && (
                 <button
                    onClick={() => setIsOpen(false)}
-                   className="mt-6 mb-1 text-xs font-semibold text-slate-400 hover:text-slate-600 transition-colors"
+                   className="mt-4 mb-1 text-xs font-semibold text-slate-400 hover:text-slate-600 transition-colors"
                 >
                   Skip intro
                 </button>

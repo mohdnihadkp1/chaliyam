@@ -441,6 +441,34 @@ export default function MapSection() {
         };
       }
     });
+    
+    // Add context menu (long press) to drop a new marker
+    mapInstance.current.off('contextmenu');
+    mapInstance.current.on('contextmenu', (e: any) => {
+      const { lat, lng } = e.latlng;
+      if (markersLayer.current) {
+        const icon = L.divIcon({
+          html: `<div style="background:#f59e0b; color:white; border-radius:50%; width:30px; height:30px; display:flex; align-items:center; justify-content:center; border:2px solid white; box-shadow:0 4px 12px rgba(0,0,0,0.5);"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></div>`,
+          iconSize: [30, 30],
+          iconAnchor: [15, 15],
+          className: "",
+        });
+        const tempMarker = L.marker([lat, lng], { icon }).addTo(markersLayer.current);
+        setTimeout(() => {
+          if (markersLayer.current && markersLayer.current.hasLayer(tempMarker)) {
+            markersLayer.current.removeLayer(tempMarker);
+          }
+        }, 15000);
+      }
+      setIsReportModalOpen(true);
+      setReportType('landmark');
+      setTimeout(() => {
+        const locInput = document.getElementById("report-location-input") as HTMLInputElement;
+        if (locInput) {
+          locInput.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+        }
+      }, 100);
+    });
   }
  return () => {
  /* Keep map instance alive, just clear layers if needed */
@@ -705,12 +733,14 @@ export default function MapSection() {
  Location Details
  </label>{""}
  <input
+ id="report-location-input"
  name="location"
  required
  type="text"
  placeholder="e.g., Near Chaliyam Beach"
  className="w-full px-3 py-2 rounded-lg border border-[var(--color-outline)] bg-slate-50 border-slate-200 text-slate-800 outline-none focus:border-indigo-500 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 placeholder:text-slate-400 font-medium transition-all"
  />{""}
+ <p className="text-[10px] text-slate-500 mt-1 ml-1">Tip: Long-press anywhere on the map to auto-fill coordinates.</p>
  </div>{""}
  <div>
  {""}

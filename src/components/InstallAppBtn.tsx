@@ -9,7 +9,7 @@ interface InstallAppBtnProps {
 
 const InstallAppBtn = React.memo(({ className = "", variant = "header" }: InstallAppBtnProps) => {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
-  const [isInstallable, setIsInstallable] = useState(false);
+  const [isInstallable, setIsInstallable] = useState(true);
   const [showIOSPrompt, setShowIOSPrompt] = useState(false);
   const [isIOS, setIsIOS] = useState(false);
 
@@ -29,12 +29,8 @@ const InstallAppBtn = React.memo(({ className = "", variant = "header" }: Instal
 
     const isStandalone = window.matchMedia("(display-mode: standalone)").matches || ((navigator as any).standalone === true);
     
-    if (!isStandalone) {
-      if (checkIOS) {
-        setIsInstallable(true); // iOS won't fire beforeinstallprompt
-      } else {
-        // Wait for beforeinstallprompt on Android/Desktop
-      }
+    if (isStandalone) {
+      setIsInstallable(false);
     }
 
     // Clean up
@@ -123,8 +119,8 @@ const InstallAppBtn = React.memo(({ className = "", variant = "header" }: Instal
               >
                 <X size={20} />
               </button>
-              <div className="w-12 h-12 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600 mb-4 shadow-sm border border-indigo-100">
-                <Download size={24} />
+              <div className="w-16 h-16 bg-white rounded-[14px] flex items-center justify-center mb-4 shadow-sm border border-slate-100 overflow-hidden mx-auto md:mx-0">
+                <img src="/icon.svg" alt="Chaliyam" className="w-full h-full object-contain" />
               </div>
               <h3 className="text-xl font-bold text-gray-900 mb-2">Install Chaliyam</h3>
               <p className="text-sm text-gray-500 mb-6 leading-relaxed">

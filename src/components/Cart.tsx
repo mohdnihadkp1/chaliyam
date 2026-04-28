@@ -1,4 +1,4 @@
-import { X, ShoppingCart, Trash2, Minus, Plus, Tag } from 'lucide-react';
+import { X, ShoppingCart, Trash2, Minus, Plus, Tag, AlertCircle } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -12,18 +12,36 @@ export default function Cart() {
       return sum + (price * item.quantity);
     }, 0);
     const discount = subtotal > 2000 ? subtotal * 0.1 : 0;
-    const total = subtotal - discount;
+    const tax = (subtotal - discount) * 0.05; // 5% GST
+    const shipping = subtotal > 500 ? 0 : 50; // free shipping over 500
+    const total = subtotal - discount + tax + shipping;
     
-    let message = `*🛒 NEW ORDER - Calicut Store*\n\n`;
+    let message = `🛒 *NEW ORDER REQUEST*\n`;
+    message += `*From:* Chaliyam Connect Marketplace\n`;
+    message += `--------------------------------------\n\n`;
+    
+    message += `📋 *ORDER DETAILS:*\n\n`;
     cartItems.forEach((item, index) => {
-      message += `${index + 1}. *${item.product.name}*\n`;
-      message += `   Qty: ${item.quantity} x ${item.product.price}\n`;
-      message += `   Link: ${item.product.productUrl}\n\n`;
+      message += `*${index + 1}. ${item.product.name}*\n`;
+      message += `   Quantity  : ${item.quantity}\n`;
+      message += `   Price     : ${item.product.price}\n`;
+      message += `   Product URL: ${item.product.productUrl || 'N/A'}\n\n`;
     });
-    message += `*Subtotal:* \u20B9${subtotal.toFixed(2)}\n`;
-    if (discount > 0) message += `*Discount (10%):* -\u20B9${discount.toFixed(2)}\n`;
-    message += `*Total Amount:* \u20B9${total.toFixed(2)}\n\n`;
-    message += `Please confirm my order.`;
+    
+    message += `--------------------------------------\n`;
+    message += `💳 *PAYMENT SUMMARY:*\n\n`;
+    message += `   Subtotal  : ₹${subtotal.toFixed(2)}\n`;
+    if (discount > 0) message += `   Discount  : -₹${discount.toFixed(2)} (10%)\n`;
+    message += `   Tax (5%)  : ₹${tax.toFixed(2)}\n`;
+    message += `   Shipping  : ${shipping === 0 ? 'Free' : `₹${shipping.toFixed(2)}`}\n`;
+    message += `\n*💰 TOTAL TO PAY: ₹${total.toFixed(2)}*\n`;
+    message += `--------------------------------------\n\n`;
+    
+    message += `⚠️ *IMPORTANT PAYMENT TERMS*\n`;
+    message += `❌ Cash on Delivery (COD) is NOT available.\n`;
+    message += `✅ Only UPI or Online payments are accepted.\n\n`;
+    
+    message += `Please confirm my order and share your UPI Details/QR code to proceed with the payment.`;
 
     const encodedMessage = encodeURIComponent(message);
     window.open(`https://wa.me/?text=${encodedMessage}`, '_blank');
@@ -107,29 +125,49 @@ export default function Cart() {
                 {(() => {
                   const subtotal = cartItems.reduce((sum, item) => sum + (parseInt(item.product.price.replace(/[^0-9]/g, "")) * item.quantity), 0);
                   const discount = subtotal > 2000 ? subtotal * 0.1 : 0;
-                  const total = subtotal - discount;
+                  const tax = (subtotal - discount) * 0.05;
+                  const shipping = subtotal > 500 ? 0 : 50;
+                  const total = subtotal - discount + tax + shipping;
                   
                   return (
                     <>
                       <div className="flex justify-between text-base text-[var(--color-on-surface-variant)]">
                         <span>Subtotal</span>
-                        <span className="font-bold text-gray-900">\u20B9{subtotal.toFixed(2)}</span>
+                        <span className="font-bold text-gray-900">₹{subtotal.toFixed(2)}</span>
                       </div>
                       {discount > 0 && (
                         <div className="flex justify-between text-base text-emerald-600 font-bold bg-emerald-50 p-3 rounded-xl items-center border border-emerald-100">
                           <div className="flex items-center gap-2"><Tag size={16}/> 10% Discount applied</div>
-                          <span>-\u20B9{discount.toFixed(2)}</span>
+                          <span>-₹{discount.toFixed(2)}</span>
                         </div>
                       )}
                       <div className="flex justify-between text-base text-[var(--color-on-surface-variant)]">
+                        <span>Estimated Tax (5%)</span>
+                        <span className="font-bold text-gray-900">₹{tax.toFixed(2)}</span>
+                      </div>
+                      <div className="flex justify-between text-base text-[var(--color-on-surface-variant)]">
                         <span>Delivery Option</span>
-                        <span className="text-emerald-600 font-bold">Free</span>
+                        <span className="font-bold text-gray-900 whitespace-nowrap">
+                          {shipping === 0 ? <span className="text-emerald-600">Free</span> : `₹${shipping.toFixed(2)}`}
+                        </span>
+                      </div>
+                      <div className="bg-gradient-to-r from-red-50 to-orange-50 border border-red-100 rounded-2xl p-4 shadow-sm relative overflow-hidden mt-2">
+                        <div className="absolute top-0 left-0 w-1 h-full bg-red-500"></div>
+                        <div className="flex items-start gap-3">
+                          <div className="mt-0.5 bg-red-100 p-1.5 rounded-full text-red-600 shrink-0">
+                            <AlertCircle size={16} />
+                          </div>
+                          <div>
+                            <h4 className="text-[14px] font-bold text-red-900 mb-1 leading-tight">Cash on Delivery Not Available</h4>
+                            <p className="text-[13px] font-medium text-orange-800 leading-snug">Order must be paid online. Only <span className="font-bold text-red-700">UPI / Online payments</span> are accepted.</p>
+                          </div>
+                        </div>
                       </div>
                       <div className="pt-5 border-t border-[var(--color-outline)] flex justify-between items-end">
                         <span className="text-lg font-bold text-gray-900">Total</span>
                         <div className="text-right">
-                          <span className="text-3xl font-extrabold text-gray-900 block">\u20B9{total.toFixed(2)}</span>
-                          <span className="text-xs text-gray-500 font-medium">Including taxes</span>
+                          <span className="text-3xl font-extrabold text-gray-900 block">₹{total.toFixed(2)}</span>
+                          <span className="text-xs text-gray-500 font-medium">Including taxes and shipping</span>
                         </div>
                       </div>
                     </>

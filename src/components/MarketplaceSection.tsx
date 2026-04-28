@@ -2,6 +2,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { ShareModal } from './ShareModal';
 import { advancedShare } from '../lib/shareUtils';
 import React from 'react';
+import { formatLocalTime } from "../lib/utils";
 import { Helmet } from "react-helmet-async";
 import { useState, useRef, useEffect } from"react";
 import { BUSINESS_LISTINGS } from"../data";
@@ -286,7 +287,7 @@ export default function MarketplaceSection() {
  {item.title}
  </span>
  <span className="text-[11px] text-slate-500 opacity-80">
- Chaliyam • {item.date}
+ Chaliyam • {formatLocalTime(item.date)}
  </span>
  </div>
  </div>
@@ -397,7 +398,7 @@ export default function MarketplaceSection() {
  <div className="flex gap-2 text-[13px] text-slate-500 font-medium">
  
  <span>Chaliyam</span> <span>•</span>
- <span>Listed {selectedItem.date}</span>
+ <span>Listed {formatLocalTime(selectedItem.date)}</span>
  </div>
  </div>
  {/* Description */}

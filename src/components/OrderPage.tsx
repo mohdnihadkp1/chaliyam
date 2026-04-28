@@ -27,13 +27,23 @@ export default function OrderPage() {
       setIsSubmitting(false);
       setIsSuccess(true);
       
-      let text = `*🛍️ NEW ADVANCED ORDER* 🛍️\n\n`;
-      text += `*Customer:* ${name}\n`;
-      text += `*Phone:* ${phone}\n`;
-      text += `*Delivery Address:*\n${address}\n\n`;
-      text += `*Order Items:*\n${items}\n\n`;
-      text += `*Preferred Time:* ${time}\n`;
-      text += `*Payment Method:* ${payment}\n\n`;
+      let text = `🛍️ *NEW HOME DELIVERY ORDER* 🛍️\n`;
+      text += `--------------------------------------\n\n`;
+      text += `👤 *CUSTOMER DETAILS*\n`;
+      text += `   Name    : ${name}\n`;
+      text += `   Phone   : ${phone}\n`;
+      text += `   Address : ${address}\n\n`;
+      
+      text += `📦 *ORDER ITEMS*\n`;
+      text += `${items}\n\n`;
+      
+      text += `🕒 *DELIVERY PREFERENCE*\n`;
+      text += `   Time : ${time}\n\n`;
+      text += `--------------------------------------\n`;
+      text += `💳 *PAYMENT INFO*\n`;
+      text += `   Method : UPI / Online Only\n`;
+      text += `   ⚠️ COD - Not available.\n\n`;
+      text += `Please process this order and share your UPI Details/QR code for the payment.`;
       
       const encodedText = encodeURIComponent(text);
       const whatsappNumber = "919846750898";
@@ -151,17 +161,13 @@ export default function OrderPage() {
                 </div>
 
                 {/* Payment Method */}
-                <div className="border border-[var(--color-outline)] rounded-2xl bg-slate-50 p-3.5 flex flex-col gap-2 relative">
-                   <div className="text-xs font-bold text-[var(--color-on-surface-variant)] uppercase tracking-wider mb-1 flex items-center gap-1.5 flex-wrap"><CreditCard size={14}/> Payment</div>
-                   <div className="flex items-center gap-4">
-                     <label className="flex items-center gap-2 cursor-pointer text-sm font-medium text-slate-700">
-                       <input type="radio" name="payment" value="Cash on Delivery" className="w-4 h-4 text-[var(--color-primary)] focus:ring-[var(--color-primary)] border-slate-300" defaultChecked />
-                       COD
-                     </label>
-                     <label className="flex items-center gap-2 cursor-pointer text-sm font-medium text-slate-700">
-                       <input type="radio" name="payment" value="UPI / Online" className="w-4 h-4 text-[var(--color-primary)] focus:ring-[var(--color-primary)] border-slate-300" />
-                       UPI / Online
-                     </label>
+                <div className="border border-orange-200 rounded-2xl bg-gradient-to-br from-orange-50 to-red-50 p-4 flex flex-col gap-2 relative overflow-hidden shadow-inner group">
+                   <div className="absolute top-0 right-0 w-16 h-16 bg-red-100 rounded-full blur-xl -mr-8 -mt-8 opacity-50"></div>
+                   <div className="text-[11px] font-black text-red-600 uppercase tracking-widest mb-1 flex items-center gap-1.5 flex-wrap z-10"><CreditCard size={14} className="text-red-500"/> Payment Info</div>
+                   <div className="flex flex-col gap-1.5 z-10">
+                     <p className="text-[15px] font-bold text-red-900 leading-snug">⚠️ COD - Not available.</p>
+                     <p className="text-[13px] font-medium text-red-700 leading-tight">Only UPI / Online payment is accepted.</p>
+                     <input type="hidden" name="payment" value="UPI / Online Only" />
                    </div>
                 </div>
               </div>

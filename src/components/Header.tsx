@@ -87,15 +87,15 @@ export default function Header() {
  >
  {""}
  <div className="flex items-center justify-center text-[var(--color-primary)] shrink-0">
- {""}
-  <Logo className="h-10 w-auto object-contain" />
+  {""}
+  <Logo className="h-10 md:h-11 w-auto object-contain rounded-[10px] shadow-md hover:scale-105 transition-transform" />
  </div>{""}
  <div className="flex flex-col justify-center">
  {""}
- <span className="font-yatra text-xl md:text-2xl text-[var(--color-on-surface)] leading-none tracking-wide md:bg-gradient-to-r md:from-indigo-600 md:to-purple-600 md: md: md: bg-clip-text md:text-transparent">
+ <span className="font-extrabold text-xl md:text-2xl text-[var(--color-on-surface)] leading-none tracking-tight">
  Chaliyam
  </span>{""}
- <span className="text-[10px] md:text-[11px] text-[var(--color-on-surface-variant)] tracking-widest uppercase mt-1 font-medium">
+ <span className="text-[10px] md:text-[11px] text-[var(--color-on-surface-variant)] tracking-widest uppercase mt-0.5 font-bold">
  Connect • KL85
  </span>{""}
  </div>{""}
@@ -219,7 +219,8 @@ export default function Header() {
  {""}
  <div className="flex flex-col gap-1.5 mb-6">
  {""}
- <div className="text-[10px] sm:text-xs font-bold text-[var(--color-on-surface-variant)] uppercase tracking-wider mb-1 ml-2">
+ <InstallAppBtn variant="mobile" />{""}
+ <div className="text-[10px] sm:text-xs font-bold text-[var(--color-on-surface-variant)] uppercase tracking-wider mb-1 ml-2 mt-4">
  Navigation
  </div>{""}
  {allNavItems.map((item) => (
@@ -264,13 +265,12 @@ export default function Header() {
  </div>{""}
  <span className="text-sm font-semibold">About Us</span>{""}
  </button>{""}
- <InstallAppBtn variant="mobile" />{""}
  </div>{""}
  </div>{""}
  {/* Mobile Navigation (Bottom) - MD3 Style */}{""}
  <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-[var(--color-surface)] border-t border-[var(--color-outline)]/30 z-40 pb-safe-bottom">
  {""}
- <div className="flex justify-evenly items-center h-[80px]">
+ <div className="flex justify-evenly items-center h-[64px]">
  {""}
  {[
  { id:"home", path:"/", label:"Home", icon: Home },
@@ -299,22 +299,22 @@ export default function Header() {
  <button
  key={item.id}
  onClick={item.action}
- className="flex flex-col items-center justify-center gap-1 w-[64px] h-[64px] group border-none bg-transparent cursor-pointer relative active:scale-95 transition-all duration-150"
+ className="flex flex-col items-center justify-center gap-0.5 w-[56px] h-[56px] group border-none bg-transparent cursor-pointer relative active:scale-95 transition-all duration-150"
  >
  {""}
  <div
- className={`w-[64px] h-[32px] flex items-center justify-center rounded-2xl transition-all duration-300 bg-transparent group-hover:bg-[var(--color-outline)]/20`}
+ className={`w-[56px] h-[28px] flex items-center justify-center rounded-2xl transition-all duration-300 bg-transparent group-hover:bg-[var(--color-outline)]/20`}
  >
  {""}
  <item.icon
- size={24}
+ size={20}
  className={`transition-all duration-300 ease-in-out text-[var(--color-on-surface-variant)]`}
  fill="none"
  strokeWidth={1.5}
  />{""}
  </div>{""}
  <span
- className={`text-[12px] font-medium tracking-wide transition-all duration-300 ease-in-out text-[var(--color-on-surface-variant)]`}
+ className={`text-[10px] font-medium tracking-wide transition-all duration-300 ease-in-out text-[var(--color-on-surface-variant)]`}
  >
  {""}
  {item.label}{""}
@@ -326,22 +326,22 @@ export default function Header() {
  <Link
  key={item.id}
  to={item.path}
- className="flex flex-col items-center justify-center gap-1 w-[64px] h-[64px] no-underline group active:scale-95"
+ className="flex flex-col items-center justify-center gap-0.5 w-[56px] h-[56px] no-underline group active:scale-95"
  >
  {""}
  <div
- className={`w-[64px] h-[32px] flex items-center justify-center rounded-2xl transition-all duration-300 ${isActive ?"bg-[var(--color-primary-container)]" :"bg-transparent group-hover:bg-[var(--color-outline)]/20"}`}
+ className={`w-[56px] h-[28px] flex items-center justify-center rounded-2xl transition-all duration-300 ${isActive ?"bg-[var(--color-primary-container)]" :"bg-transparent group-hover:bg-[var(--color-outline)]/20"}`}
  >
  {""}
  <item.icon
- size={24}
+ size={20}
  className={`transition-all duration-300 ease-in-out ${isActive ?"text-[var(--color-on-primary-container)]" :"text-[var(--color-on-surface-variant)]"}`}
  fill={isActive ?"currentColor" :"none"}
  strokeWidth={isActive ? 2 : 1.5}
  />{""}
  </div>{""}
  <span
- className={`text-[12px] font-medium tracking-wide transition-all duration-300 ease-in-out ${isActive ?"text-[var(--color-on-surface)] font-semibold" :"text-[var(--color-on-surface-variant)]"}`}
+ className={`text-[10px] font-medium tracking-wide transition-all duration-300 ease-in-out ${isActive ?"text-[var(--color-on-surface)] font-semibold" :"text-[var(--color-on-surface-variant)]"}`}
  >
  {""}
  {item.label}{""}
