@@ -92,12 +92,12 @@ const promoAds = [
   },
   {
     id: 8,
-    title: "Medical Camp 2024",
-    subtitle: "Health & Wellness",
-    desc: "Free checkups for everyone this Sunday.",
-    cta: "Details",
-    image: "https://images.unsplash.com/photo-1532938911079-1b06ac7ce122?auto=format&fit=crop&w=1200&q=80",
-    path: "/news",
+    title: "Chaliyam Connect is Hiring",
+    subtitle: "Join My Team",
+    desc: "Build advanced tech zero lag or bugs with Mohd Nihad KP.",
+    cta: "Contact Me",
+    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80",
+    path: "mailto:mohdnihadkp@gmail.com",
   },
 ];
 
@@ -311,7 +311,13 @@ export default function Home() {
           {promoAds.map((ad, index) => (
             <div 
               key={ad.id} 
-              onClick={() => navigate(ad.path)}
+              onClick={() => {
+                if (ad.path.startsWith('mailto:')) {
+                  window.location.href = ad.path;
+                } else {
+                  navigate(ad.path);
+                }
+              }}
               className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentAdIndex ? 'opacity-100 z-10 pointer-events-auto' : 'opacity-0 z-0 pointer-events-none'}`}
             >
               <img src={ad.image} alt={ad.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-[2s] ease-out" />

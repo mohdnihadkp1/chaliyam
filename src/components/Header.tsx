@@ -2,73 +2,56 @@ import { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Logo from "./Logo";
 import { useCart } from "../context/CartContext";
+import InstallAppBtn from "./InstallAppBtn";
 import {
- Home,
- Map as MapIcon,
- Camera,
- Bus,
- Phone,
- Store,
- Newspaper,
- ClipboardList,
- Briefcase,
- Menu,
- X,
- Info,
- Users,
- Download,
- Palmtree,
- ShoppingBag,
- ShoppingCart,
- ChevronDown,
-} from"lucide-react";
+  Home,
+  Map as MapIcon,
+  Camera,
+  Bus,
+  Phone,
+  Store,
+  Newspaper,
+  ClipboardList,
+  Briefcase,
+  Menu,
+  X,
+  Info,
+  Users,
+  Palmtree,
+  ShoppingBag,
+  ShoppingCart,
+  ChevronDown,
+} from "lucide-react";
 
 export default function Header() {
- const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isAboutModalOpen, setIsAboutModalOpen] = useState(false);
- const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
- const [isMoreDropdownOpen, setIsMoreDropdownOpen] = useState(false);
- const dropdownRef = useRef<HTMLDivElement>(null);
- const location = useLocation();
- const { cartCount } = useCart();
- const activeSection =
- location.pathname ==="/" ?"home" : location.pathname.substring(1);
- /* Close dropdown on click outside */ useEffect(() => {
- function handleClickOutside(event: MouseEvent) {
- if (
- dropdownRef.current &&
- !dropdownRef.current.contains(event.target as Node)
- ) {
- setIsMoreDropdownOpen(false);
- }
- }
- document.addEventListener("mousedown", handleClickOutside);
- return () => document.removeEventListener("mousedown", handleClickOutside);
- }, []);
- /* Close menus on route change */ useEffect(() => {
- setIsMobileMenuOpen(false);
- setIsMoreDropdownOpen(false);
- }, [location.pathname]);
+  const [isMoreDropdownOpen, setIsMoreDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const location = useLocation();
+  const { cartCount } = useCart();
+  const activeSection =
+    location.pathname === "/" ? "home" : location.pathname.substring(1);
+    
+  /* Close dropdown on click outside */ 
   useEffect(() => {
- const handleBeforeInstallPrompt = (e: Event) => {
- e.preventDefault();
- setDeferredPrompt(e);
- };
- window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
- return () =>
- window.removeEventListener(
-"beforeinstallprompt",
- handleBeforeInstallPrompt,
- );
- }, []);
- const handleInstallClick = async () => {
- if (!deferredPrompt) return;
- deferredPrompt.prompt();
- const { outcome } = await deferredPrompt.userChoice;
- if (outcome ==="accepted") {
- setDeferredPrompt(null);
- }
- };
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsMoreDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+  
+  /* Close menus on route change */ 
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+    setIsMoreDropdownOpen(false);
+  }, [location.pathname]);
  const navItems = [
  { id:"home", path:"/", label:"Home", icon: Home },
  { id:"store", path:"/store", label:"Store", icon: ShoppingBag },
@@ -203,15 +186,7 @@ export default function Header() {
      </span>
    )}
  </Link>
- {deferredPrompt && (
- <button
- onClick={handleInstallClick}
- className="hidden md:flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[var(--color-primary)] text-[var(--color-on-primary)] hover:bg-indigo-700 transition-all text-sm font-bold shadow-sm hover:shadow-md  whitespace-nowrap active:scale-95 transition-all duration-150"
- >
- {""}
- <Download size={16} /> Install App{""}
- </button>
- )}{""}
+ <InstallAppBtn variant="header" />{""}
  <button
  onClick={() => setIsAboutModalOpen(true)}
  className="hidden md:flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[var(--color-background)] border border-[var(--color-outline)] text-[var(--color-on-surface)] hover:bg-[var(--color-surface-variant)] hover:text-[var(--color-primary)] transition-all text-sm font-semibold"
@@ -289,25 +264,7 @@ export default function Header() {
  </div>{""}
  <span className="text-sm font-semibold">About Us</span>{""}
  </button>{""}
- {deferredPrompt && (
- <button
- onClick={() => {
- handleInstallClick();
- setIsMobileMenuOpen(false);
- }}
- className="flex items-center gap-3 p-2 rounded-xl no-underline transition-all duration-200 text-[var(--color-primary)] bg-[var(--color-primary-container)] hover:bg-[var(--color-primary-container)] text-left border border-indigo-200 mt-1 shadow-sm"
- >
- {""}
- <div className="p-1.5 rounded-lg bg-indigo-200">
- {""}
- <Download
- size={18}
- className="text-[var(--color-primary)]"
- />{""}
- </div>{""}
- <span className="text-sm font-bold">Install App</span>{""}
- </button>
- )}{""}
+ <InstallAppBtn variant="mobile" />{""}
  </div>{""}
  </div>{""}
  {/* Mobile Navigation (Bottom) - MD3 Style */}{""}

@@ -5,6 +5,17 @@ import { createPortal } from 'react-dom';
 
 const STORIES = [
   {
+    id: 'ad-start',
+    creator: "Mohd Nihad KP",
+    avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=150&q=80",
+    image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=600&q=80",
+    title: "Chaliyam Connect is Hiring!",
+    description: "I am building an advanced platform and I need a dedicated team to sit and work with me. If you are a talented person interested in joining, contact me now!",
+    ctaText: "Contact Me (Mohd Nihad KP)",
+    link: "mailto:mohdnihadkp@gmail.com",
+    isAd: true
+  },
+  {
     id: 1,
     creator: "Calicut Store",
     avatar: "https://images.unsplash.com/photo-1604719312566-8912e9227c6a?auto=format&fit=crop&w=150&q=80",
@@ -19,6 +30,17 @@ const STORIES = [
     image: "https://images.unsplash.com/photo-1550009158-9ebf69173e03?auto=format&fit=crop&w=600&q=80",
     title: "50% Off Electronics",
     link: "/directory"
+  },
+  {
+    id: 'ad-mid',
+    creator: "Mohd Nihad KP",
+    avatar: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=150&q=80",
+    image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=600&q=80",
+    title: "Build the Future with Me",
+    description: "Chaliyam Connect is looking for good people. Join my team to build advanced tech with zero lag or bugs. Let's work together!",
+    ctaText: "Join My Team",
+    link: "mailto:mohdnihadkp@gmail.com",
+    isAd: true
   },
   {
     id: 3,
@@ -117,7 +139,7 @@ export default function StoriesSection() {
                 </div>
               </div>
               <span className="text-[10px] md:text-xs font-semibold text-[var(--color-on-surface)] text-center w-16 md:w-20 truncate">
-                {story.creator}
+                {(story as any).isAd ? 'Ads' : story.creator}
               </span>
             </div>
           ))}
@@ -145,10 +167,17 @@ export default function StoriesSection() {
             {/* Header info */}
             <div className="absolute top-0 inset-x-0 pt-[env(safe-area-inset-top,1rem)] mt-6 z-10 flex items-start justify-between px-4 pb-12 bg-gradient-to-b from-black/60 to-transparent">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-white/80 shadow-md">
-                  <img src={activeStory.avatar} className="w-full h-full object-cover" alt="" />
+                <div className="relative">
+                  <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-white/80 shadow-md">
+                    <img src={activeStory.avatar} className="w-full h-full object-cover" alt="" />
+                  </div>
+                  {(activeStory as any).isAd && (
+                    <div className="absolute -bottom-2 -right-2 bg-gradient-to-r from-indigo-500 to-purple-600 px-1.5 py-0.5 rounded text-[8px] font-black text-white uppercase tracking-wider shadow-sm border border-white/20">
+                      Ad
+                    </div>
+                  )}
                 </div>
-                <span className="text-white font-bold text-[15px] drop-shadow-md tracking-wide">{activeStory.creator}</span>
+                <span className="text-white font-bold text-[15px] drop-shadow-md tracking-wide">{(activeStory as any).isAd ? 'Ads' : activeStory.creator}</span>
               </div>
               <button 
                 onClick={() => setActiveStoryIndex(null)}
@@ -171,16 +200,31 @@ export default function StoriesSection() {
             
             {/* Footer / CTA */}
             <div className="absolute bottom-0 pb-safe-bottom inset-x-0 px-6 pt-24 pb-8 bg-gradient-to-t from-black via-black/80 to-transparent flex flex-col items-center z-20 pointer-events-none">
-              <h3 className="text-white text-3xl font-extrabold mb-6 drop-shadow-xl text-center tracking-tight">{activeStory.title}</h3>
-              <div className="pointer-events-auto w-full">
+              <h3 className="text-white text-3xl font-extrabold mb-2 drop-shadow-xl text-center tracking-tight">{activeStory.title}</h3>
+              
+              {(activeStory as any).description && (
+                <p className="text-white/90 text-sm mb-6 mt-2 drop-shadow text-center leading-relaxed font-medium">
+                  {(activeStory as any).description}
+                </p>
+              )}
+              
+              <div className={`pointer-events-auto w-full ${!(activeStory as any).description ? 'mt-4' : ''}`}>
                 <button 
                   onClick={() => {
                     setActiveStoryIndex(null);
-                    navigate(activeStory.link);
+                    if (activeStory.link.startsWith("mailto:")) {
+                      window.location.href = activeStory.link;
+                    } else {
+                      navigate(activeStory.link);
+                    }
                   }}
-                  className="w-full py-4 bg-white/95 text-black hover:bg-white rounded-2xl font-extrabold text-[17px] tracking-wide transition-all active:scale-95 shadow-xl shadow-white/10 flex items-center justify-center gap-2"
+                  className={`w-full py-4 ${
+                    (activeStory as any).isAd 
+                      ? 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white border border-white/20' 
+                      : 'bg-white/95 text-black hover:bg-white border border-white/20'
+                  } rounded-2xl font-extrabold text-[17px] tracking-wide transition-all active:scale-95 shadow-xl shadow-white/10 flex items-center justify-center gap-2`}
                 >
-                  Swipe to Shop
+                  {(activeStory as any).ctaText || "Swipe to Shop"}
                   <ChevronRight size={20} className="opacity-60" strokeWidth={3} />
                 </button>
               </div>

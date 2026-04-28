@@ -1,18 +1,20 @@
 import { useState } from "react";
 import Logo from "./Logo";
+import InstallAppBtn from "./InstallAppBtn";
 import {
- Instagram,
- Facebook,
- X,
- Palmtree,
- Mail,
- Shield,
- MessageSquare,
- Send,
- BookOpen,
- Info,
-} from"lucide-react";
-import FeedbackModal from"./FeedbackModal";
+  Instagram,
+  Facebook,
+  X,
+  Palmtree,
+  Mail,
+  Shield,
+  MessageSquare,
+  Send,
+  BookOpen,
+  Info,
+} from "lucide-react";
+import FeedbackModal from "./FeedbackModal";
+
 export default function Footer() {
  const [isAboutOpen, setIsAboutOpen] = useState(false);
  const [isIgOpen, setIsIgOpen] = useState(false);
@@ -196,33 +198,34 @@ export default function Footer() {
  </li>{""}
  </ul>{""}
  </div>{""}
- {/* Help & Support */}{""}
- <div className="text-left col-span-2 md:col-span-1">
- {""}
- <h4 className="text-[var(--color-on-surface)] font-bold mb-3 md:mb-4 uppercase tracking-wider text-sm">
- Need Help?
- </h4>{""}
- <div className="bg-[var(--color-surface-variant)] p-4 rounded-2xl border border-[var(--color-outline)]">
- {""}
- <p className="text-sm mb-4 leading-relaxed">
- {""}
- Found a bug? Data looks incorrect? Or want to contribute to the
- community directory?{""}
- </p>{""}
- <button
- onClick={() => {
- setFeedbackInitialType("bug");
- setIsFeedbackOpen(true);
- }}
- className="inline-flex w-full items-center justify-center gap-2 px-4 py-2.5 bg-[var(--color-primary)] hover:bg-[var(--color-primary)]/90 text-[var(--color-on-primary)] transition-colors rounded-xl text-sm font-semibold shadow-sm hover:shadow-md "
- >
- {""}
- <MessageSquare className="w-4 h-4" />{""}
- <span>Get In Touch</span>{""}
- </button>{""}
- </div>{""}
- </div>{""}
- </div>{""}
+          {/* Help & Support */}{""}
+          <div className="text-left col-span-2 md:col-span-1">
+            {""}
+            <h4 className="text-[var(--color-on-surface)] font-bold mb-3 md:mb-4 uppercase tracking-wider text-sm">
+              Need Help?
+            </h4>{""}
+            <div className="bg-[var(--color-surface-variant)] p-4 rounded-2xl border border-[var(--color-outline)]">
+              {""}
+              <p className="text-sm mb-4 leading-relaxed">
+                {""}
+                Found a bug? Data looks incorrect? Or want to contribute to the
+                community directory?{""}
+              </p>{""}
+              <button
+                onClick={() => {
+                  setFeedbackInitialType("bug");
+                  setIsFeedbackOpen(true);
+                }}
+                className="inline-flex w-full items-center justify-center gap-2 px-4 py-2.5 bg-[var(--color-primary)] hover:bg-[var(--color-primary)]/90 text-[var(--color-on-primary)] transition-colors rounded-xl text-sm font-semibold shadow-sm hover:shadow-md "
+              >
+                {""}
+                <MessageSquare className="w-4 h-4" />{""}
+                <span>Get In Touch</span>{""}
+              </button>{""}
+            </div>{""}
+            <InstallAppBtn variant="footer" />
+          </div>{""}
+        </div>{""}
  <div className="flex flex-col md:flex-row justify-between items-center mt-12 md:mt-16 pt-6 border-t border-[var(--color-outline)] gap-4">
  {""}
  <p className="text-[12px] font-medium order-2 md:order-1">
