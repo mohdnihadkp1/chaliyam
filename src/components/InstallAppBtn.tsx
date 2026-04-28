@@ -21,7 +21,13 @@ const InstallAppBtn = React.memo(({ className = "", variant = "header" }: Instal
       setIsInstallable(true);
     };
 
+    const handleAppInstalled = () => {
+      setIsInstallable(false);
+      setDeferredPrompt(null);
+    };
+
     window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+    window.addEventListener("appinstalled", handleAppInstalled);
 
     // Initial checks for OS and Standalone Status
     const checkIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -34,7 +40,10 @@ const InstallAppBtn = React.memo(({ className = "", variant = "header" }: Instal
     }
 
     // Clean up
-    return () => window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+    return () => {
+      window.removeEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+      window.removeEventListener("appinstalled", handleAppInstalled);
+    };
   }, []);
 
   const handleInstallClick = async () => {
