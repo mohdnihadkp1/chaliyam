@@ -1,5 +1,6 @@
 export const SPOTS = [
   {
+    id: "beach",
     name: "Chaliyam Beach", mal: "ചാലിയം കടൽത്തീരം", tag: "Beach",
     bg: "linear-gradient(135deg,#006994,#00a8cc)",
     image: "https://picsum.photos/seed/chaliyambeach/600/400",
@@ -7,6 +8,7 @@ export const SPOTS = [
     desc: "A serene, less-crowded beach known for its calm waters and stunning sunset views over the Arabian Sea. Popular among local fishing families and nature lovers."
   },
   {
+    id: "lighthouse",
     name: "Chaliyam Lighthouse", mal: "ദീപസ്തംഭം", tag: "Heritage",
     bg: "linear-gradient(135deg,#8b6310,#c9941a)",
     image: "https://picsum.photos/seed/lighthouse/600/400",
@@ -14,6 +16,7 @@ export const SPOTS = [
     desc: "The iconic lighthouse standing guard over the Beypore-Chaliyam coastline. Offers panoramic views of the Arabian Sea and the Kozhikode skyline."
   },
   {
+    id: "rivermouth",
     name: "Chaliyar River Mouth", mal: "ചാലിയാർ നദീമുഖം", tag: "Nature",
     bg: "linear-gradient(135deg,#1a6b3c,#2d7a4f)",
     image: "https://picsum.photos/seed/rivermouth/600/400",
@@ -21,6 +24,7 @@ export const SPOTS = [
     desc: "Where the Chaliyar River meets the Arabian Sea — a breathtaking confluence popular for boat rides, backwater scenery and migratory bird watching."
   },
   {
+    id: "mosque",
     name: "Old Chaliyam Mosque", mal: "ജുമാ മസ്ജിദ്", tag: "Heritage",
     bg: "linear-gradient(135deg,#1a4a2e,#3d7a5a)",
     image: "https://picsum.photos/seed/mosque/600/400",
@@ -28,6 +32,7 @@ export const SPOTS = [
     desc: "A historic mosque dating back several centuries, reflecting the rich Islamic heritage of Chaliyam. Known for its traditional Kerala-style architecture."
   },
   {
+    id: "harbour",
     name: "Chaliyam Fishing Harbour", mal: "മൽസ്യബന്ധന തുറമുഖം", tag: "Culture",
     bg: "linear-gradient(135deg,#0d47a1,#1976d2)",
     image: "https://picsum.photos/seed/harbour/600/400",
@@ -35,6 +40,7 @@ export const SPOTS = [
     desc: "The lifeline of Chaliyam — a bustling fishing harbour where hundreds of boats set sail daily. Experience the authentic life of Kerala's fishing community."
   },
   {
+    id: "walkway",
     name: "Beypore Beach Walkway", mal: "ബേപ്പൂർ ബീച്ച് വഴി", tag: "Scenic",
     bg: "linear-gradient(135deg,#e65100,#f57c00)",
     image: "https://picsum.photos/seed/walkway/600/400",
@@ -42,6 +48,7 @@ export const SPOTS = [
     desc: "A beautiful coastal walkway connecting Chaliyam to the famous Beypore beach, lined with palm trees and offering spectacular sea views along the way."
   },
   {
+    id: "mangroves",
     name: "Chaliyam Mangrove Forest", mal: "കണ്ടൽ കാടുകൾ", tag: "Eco",
     bg: "linear-gradient(135deg,#2e7d32,#43a047)",
     image: "https://picsum.photos/seed/mangroves/600/400",
@@ -49,6 +56,7 @@ export const SPOTS = [
     desc: "A precious ecosystem of mangrove forests along the Chaliyar riverbanks. Home to diverse bird species and marine life — perfect for eco-tourism."
   },
   {
+    id: "market",
     name: "Friday Market (Chantha)", mal: "ചന്ത", tag: "Market",
     bg: "linear-gradient(135deg,#6a1b9a,#8e24aa)",
     image: "https://picsum.photos/seed/market/600/400",
@@ -56,6 +64,7 @@ export const SPOTS = [
     desc: "The vibrant weekly market is the social heart of Chaliyam. Fresh fish, vegetables, spices and local produce — a true Kerala market experience."
   },
   {
+    id: "jetty",
     name: "Chaliyam Boat Jetty", mal: "ബോട്ട് ജെട്ടി", tag: "Transport",
     bg: "linear-gradient(135deg,#00695c,#00897b)",
     image: "https://picsum.photos/seed/jetty/600/400",
@@ -63,6 +72,7 @@ export const SPOTS = [
     desc: "The traditional boat jetty connecting Chaliyam to Beypore. Passengers can enjoy a scenic short ferry ride across the Chaliyar river mouth."
   },
   {
+    id: "temple",
     name: "Thoovapara Temple", mal: "തൂവപ്പാറ ക്ഷേത്രം", tag: "Heritage",
     bg: "linear-gradient(135deg,#b71c1c,#e53935)",
     image: "https://picsum.photos/seed/temple/600/400",
@@ -213,12 +223,12 @@ export const PEOPLE = [
 ];
 
 export const BUSINESS_LISTINGS = [
-  { type: "sell", typeLabel: "For Sale", date: "Today", title: "Fishing Boat — 25 Feet FRP", desc: "Good condition fiberglass boat, 2022 model. Engine included. Ready to sail.", price: "₹ 3,50,000", contact: "+919876543210", contactName: "Abdul Rahman", contactDesc: "Local fisherman with 20 years experience.", images: ["https://picsum.photos/seed/boat1/400/300", "https://picsum.photos/seed/boat2/400/300"], lat: 11.1645, lng: 75.7990 },
-  { type: "rent", typeLabel: "Rent", date: "Yesterday", title: "2BHK House Near Beach Road", desc: "Fully furnished, ground floor. Suitable for family. Near Chaliyam Junction.", price: "₹ 8,000/mo", contact: "+919876543211", contactName: "Suresh Kumar", contactDesc: "Property owner", images: ["https://picsum.photos/seed/house1/400/300"], lat: 11.1577, lng: 75.8014 },
-  { type: "sell", typeLabel: "For Sale", date: "2 days ago", title: "Hero Splendor — 2021", desc: "Single owner, 12,000 km run. All documents clear. Excellent condition.", price: "₹ 65,000", contact: "+919876543212", contactName: "Mohammed Ali", contactDesc: "First owner", images: ["https://picsum.photos/seed/bike1/400/300"], lat: 11.1534, lng: 75.8126 },
-  { type: "service", typeLabel: "Service", date: "3 days ago", title: "Plumbing & Pipe Work", desc: "All types of plumbing work. Call for free estimate. Available 7 days.", price: "Call for rate", contact: "+919876543213", contactName: "Rajan Plumber", contactDesc: "Certified plumber with 15 years in Chaliyam.", images: [], lat: 11.1559, lng: 75.8112 },
-  { type: "buy", typeLabel: "Wanted", date: "4 days ago", title: "Wanted: Used Fishing Nets", desc: "Looking for used nylon fishing nets in good condition. Any quantity.", price: "Best price offered", contact: "+919876543214", contactName: "Koya", contactDesc: "Wholesale fish merchant", images: [], lat: 11.1660, lng: 75.8040 },
-  { type: "sell", typeLabel: "For Sale", date: "5 days ago", title: "Fresh Prawns & Fish — Bulk", desc: "Fresh daily catch available for bulk buyers. Contact morning 6–9 AM.", price: "Market Rate", contact: "+919876543215", contactName: "Hassan", contactDesc: "Boat owner", images: ["https://picsum.photos/seed/fish1/400/300"], lat: 11.1645, lng: 75.7990 },
-  { type: "service", typeLabel: "Service", date: "1 week ago", title: "Home Tuition — Maths & Science", desc: "Experienced teacher offering home tuition for Classes 8–12. CBSE/State.", price: "₹ 800/month", contact: "+919876543216", contactName: "Priya Teacher", contactDesc: "M.Sc B.Ed qualified teacher", images: [], lat: 11.1559, lng: 75.8112 },
-  { type: "rent", typeLabel: "Rent", date: "1 week ago", title: "Shop Space for Rent", desc: "150 sq ft shop space at Chaliyam main road. Suitable for any business.", price: "₹ 5,000/mo", contact: "+919876543217", contactName: "Manoj", contactDesc: "Building owner", images: ["https://picsum.photos/seed/shop1/400/300"], lat: 11.1534, lng: 75.8126 },
+  { id: "boat-sale-1", type: "sell", typeLabel: "For Sale", date: "Today", title: "Fishing Boat — 25 Feet FRP", desc: "Good condition fiberglass boat, 2022 model. Engine included. Ready to sail.", price: "₹ 3,50,000", contact: "+919876543210", contactName: "Abdul Rahman", contactDesc: "Local fisherman with 20 years experience.", images: ["https://picsum.photos/seed/boat1/400/300", "https://picsum.photos/seed/boat2/400/300"], lat: 11.1645, lng: 75.7990 },
+  { id: "house-rent-1", type: "rent", typeLabel: "Rent", date: "Yesterday", title: "2BHK House Near Beach Road", desc: "Fully furnished, ground floor. Suitable for family. Near Chaliyam Junction.", price: "₹ 8,000/mo", contact: "+919876543211", contactName: "Suresh Kumar", contactDesc: "Property owner", images: ["https://picsum.photos/seed/house1/400/300"], lat: 11.1577, lng: 75.8014 },
+  { id: "bike-sale-1", type: "sell", typeLabel: "For Sale", date: "2 days ago", title: "Hero Splendor — 2021", desc: "Single owner, 12,000 km run. All documents clear. Excellent condition.", price: "₹ 65,000", contact: "+919876543212", contactName: "Mohammed Ali", contactDesc: "First owner", images: ["https://picsum.photos/seed/bike1/400/300"], lat: 11.1534, lng: 75.8126 },
+  { id: "plumbing-1", type: "service", typeLabel: "Service", date: "3 days ago", title: "Plumbing & Pipe Work", desc: "All types of plumbing work. Call for free estimate. Available 7 days.", price: "Call for rate", contact: "+919876543213", contactName: "Rajan Plumber", contactDesc: "Certified plumber with 15 years in Chaliyam.", images: [], lat: 11.1559, lng: 75.8112 },
+  { id: "nets-wanted-1", type: "buy", typeLabel: "Wanted", date: "4 days ago", title: "Wanted: Used Fishing Nets", desc: "Looking for used nylon fishing nets in good condition. Any quantity.", price: "Best price offered", contact: "+919876543214", contactName: "Koya", contactDesc: "Wholesale fish merchant", images: [], lat: 11.1660, lng: 75.8040 },
+  { id: "fish-bulk-1", type: "sell", typeLabel: "For Sale", date: "5 days ago", title: "Fresh Prawns & Fish — Bulk", desc: "Fresh daily catch available for bulk buyers. Contact morning 6–9 AM.", price: "Market Rate", contact: "+919876543215", contactName: "Hassan", contactDesc: "Boat owner", images: ["https://picsum.photos/seed/fish1/400/300"], lat: 11.1645, lng: 75.7990 },
+  { id: "tuition-1", type: "service", typeLabel: "Service", date: "1 week ago", title: "Home Tuition — Maths & Science", desc: "Experienced teacher offering home tuition for Classes 8–12. CBSE/State.", price: "₹ 800/month", contact: "+919876543216", contactName: "Priya Teacher", contactDesc: "M.Sc B.Ed qualified teacher", images: [], lat: 11.1559, lng: 75.8112 },
+  { id: "shop-rent-1", type: "rent", typeLabel: "Rent", date: "1 week ago", title: "Shop Space for Rent", desc: "150 sq ft shop space at Chaliyam main road. Suitable for any business.", price: "₹ 5,000/mo", contact: "+919876543217", contactName: "Manoj", contactDesc: "Building owner", images: ["https://picsum.photos/seed/shop1/400/300"], lat: 11.1534, lng: 75.8126 },
 ];

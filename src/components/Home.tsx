@@ -122,20 +122,21 @@ export default function Home() {
  const navigate = useNavigate();
  const [weather, setWeather] = useState<WeatherData | null>(null);
  const [searchQuery, setSearchQuery] = useState("");
- useEffect(() => {
- const fetchWeather = async () => {
- try {
- const response = await fetch(
-"https://api.open-meteo.com/v1/forecast?latitude=11.16&longitude=75.81&current=temperature_2m,weather_code&timezone=auto",
- );
- const data = await response.json();
- setWeather(data);
- } catch (error) {
- console.error("Failed to fetch weather data:", error);
- }
- };
- fetchWeather();
- }, []);
+  useEffect(() => {
+    const fetchWeather = async () => {
+      try {
+        const response = await fetch(
+          "https://api.open-meteo.com/v1/forecast?latitude=11.16&longitude=75.81&current=temperature_2m,weather_code&timezone=Asia%2FKolkata"
+        );
+        if (!response.ok) return;
+        const data = await response.json();
+        setWeather(data);
+      } catch (error) {
+        // Silently ignore weather block issues to prevent console errors
+      }
+    };
+    fetchWeather();
+  }, []);
  const handleSearch = (e: React.FormEvent) => {
  e.preventDefault();
  if (!searchQuery.trim()) return;
@@ -176,6 +177,7 @@ export default function Home() {
  ];
  const secondaryActions = [
     { id: "news", path: "/news", label: "News & Events", icon: Newspaper, tag: null },
+    { id: "tasks", path: "/tasks", label: "My Tasks", icon: ClipboardList, tag: "New" },
     { id: "people", path: "/people", label: "Special Persons", icon: Users, tag: null },
     { id: "spots", path: "/spots", label: "Popular Spots", icon: Camera, tag: null },
     { id: "promo", path: "/marketplace", label: "Local Deals", icon: Star, tag: "Featured", customColor: "bg-amber-50 text-amber-600" },

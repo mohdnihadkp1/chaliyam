@@ -1,5 +1,6 @@
-import { useState, useEffect, useRef } from"react";
-import { Link, useLocation } from"react-router-dom";
+import { useState, useEffect, useRef } from "react";
+import { Link, useLocation } from "react-router-dom";
+import Logo from "./Logo";
 import { useCart } from "../context/CartContext";
 import {
  Home,
@@ -85,6 +86,7 @@ export default function Header() {
  { id:"spots", path:"/spots", label:"Spots", icon: Camera },
  { id:"people", path:"/people", label:"People", icon: Users },
  { id:"map", path:"/map", label:"Map", icon: MapIcon },
+ { id:"tasks", path:"/tasks", label:"Tasks", icon: ClipboardList },
  { id:"emergency", path:"/emergency", label:"Emergency", icon: Phone },
  ];
  const allNavItems = [...navItems, ...moreNavItems];
@@ -101,9 +103,9 @@ export default function Header() {
  className="flex items-center gap-3 no-underline text-left group shrink-0"
  >
  {""}
- <div className="w-10 h-10 bg-[var(--color-primary-container)] rounded-2xl flex items-center justify-center text-[var(--color-on-primary-container)] shadow-sm transition-all hover:shadow-md overflow-hidden">
+ <div className="flex items-center justify-center text-[var(--color-primary)] shrink-0">
  {""}
- <img src="https://raw.githubusercontent.com/mohdnihadkp1/GALLERY/refs/heads/main/icon_of_chaliyam_connect/vector.svg" alt="Chaliyam" className="w-full h-full object-cover" />{""}
+  <Logo className="h-10 w-auto object-contain" />
  </div>{""}
  <div className="flex flex-col justify-center">
  {""}
@@ -415,9 +417,8 @@ export default function Header() {
  {""}
  <div className="flex items-center gap-3 mb-4">
  {""}
- <div className="w-12 h-12 bg-white border border-[var(--color-outline)] rounded-xl flex items-center justify-center text-[var(--color-primary)] shadow-sm overflow-hidden">
- {""}
- <img src="https://raw.githubusercontent.com/mohdnihadkp1/GALLERY/refs/heads/main/icon_of_chaliyam_connect/icon.png" alt="Chaliyam" className="w-full h-full object-cover" />{""}
+ <div className="flex items-center justify-center text-[var(--color-primary)] shrink-0">
+  <Logo className="w-12 h-12 object-contain" />
  </div>{""}
  <div>
  {""}

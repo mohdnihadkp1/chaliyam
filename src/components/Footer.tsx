@@ -1,4 +1,5 @@
-import { useState } from"react";
+import { useState } from "react";
+import Logo from "./Logo";
 import {
  Instagram,
  Facebook,
@@ -49,9 +50,9 @@ export default function Footer() {
  {""}
  <div className="font-yatra text-2xl lg:text-3xl text-[var(--color-primary)] mb-3 md:mb-4 flex items-center gap-2 md:gap-3">
  {""}
- <div className="w-8 h-8 md:w-10 md:h-10 rounded-[14px] bg-[var(--color-primary-container)] flex items-center justify-center text-[var(--color-on-primary-container)] shadow-sm shrink-0">
+ <div className="flex items-center justify-center text-[var(--color-primary)] shrink-0">
  {""}
- <Palmtree className="w-4 h-4 md:w-6 md:h-6" />{""}
+  <Logo className="h-8 w-auto md:h-10 object-contain" />
  </div>{""}
  <span className="text-[var(--color-primary)]">
  {""}

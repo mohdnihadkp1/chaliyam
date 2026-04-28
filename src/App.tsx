@@ -23,6 +23,7 @@ import AddMarketplace from './components/AddMarketplace';
 import AddNews from './components/AddNews';
 import AddPeople from './components/AddPeople';
 import ReportMap from './components/ReportMap';
+import TasksSection from './components/TasksSection';
 
 import { X } from 'lucide-react';
 import { useState } from 'react';
@@ -44,6 +45,7 @@ const routeSeo = {
   "/people/add": { title: "Submit Profile | Chaliyam Professionals", desc: "Add your professional profile to the Chaliyam network." },
   "/store": { title: "Calicut Store | Order Online", desc: "Order products online from the Calicut Store and get quick delivery." },
   "/cart": { title: "Your Cart | Calicut Store", desc: "View your shopping cart and checkout." },
+  "/tasks": { title: "Tasks | Chaliyam Connect", desc: "Manage your personal tasks securely on your device." },
   "/order": { title: "Track Your Order | Calicut Store", desc: "Track your real-time order status and delivery updates." },
 };
 
@@ -121,6 +123,8 @@ export default function App() {
           <Route path="/news" element={<NewsSection />} />
           <Route path="/news/add" element={<AddNews />} />
           
+          <Route path="/tasks" element={<TasksSection />} />
+
           <Route path="/marketplace" element={<MarketplaceSection />} />
           <Route path="/marketplace/add" element={<AddMarketplace />} />
           

@@ -75,6 +75,13 @@ if (typeof window !=="undefined" && L.TileLayer) {
  });
 }
 export default function MapSection() {
+  const [shareData, setShareData] = useState<{ title: string; text: string; url: string; imageUrl?: string } | null>(null);
+
+  const doShare = async (data: { title: string; text: string; url: string; imageUrl?: string }) => {
+    const success = await advancedShare(data);
+    if (!success) setShareData(data);
+  };
+
   const navigate = useNavigate();
  const mapRef = useRef<HTMLDivElement>(null);
  const mapInstance = useRef<L.Map | null>(null);
