@@ -5,7 +5,7 @@ import { advancedShare } from '../lib/shareUtils';
 import React from "react";
 import { formatLocalTime } from "../lib/utils";
 import { Helmet } from "react-helmet-async";
-import { useState } from"react";
+import { useState, useEffect, useRef } from "react";
 import { NEWS } from"../data";
 import {
  Search,
@@ -24,9 +24,42 @@ import {
  FileText,
  Newspaper,
 } from"lucide-react";
+
+// Advanced Highlight Component
+const HighlightText = ({ text, query }: { text: string; query: string }) => {
+  if (!query) return <>{text}</>;
+  
+  const parts = text.split(new RegExp(`(${query})`, 'gi'));
+  return (
+    <>
+      {parts.map((part, index) => 
+        part.toLowerCase() === query.toLowerCase() ? (
+          <span key={index} className="bg-indigo-100 text-indigo-900 border-b-2 border-indigo-300 font-semibold px-0.5 rounded-sm transition-all duration-300">
+            {part}
+          </span>
+        ) : (
+          <span key={index}>{part}</span>
+        )
+      )}
+    </>
+  );
+};
+
 export default function NewsSection() {
   const navigate = useNavigate();
- const [searchQuery, setSearchQuery] = useState("");
+   const [searchQuery, setSearchQuery] = useState("");
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        searchInputRef.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
  const [filterDate, setFilterDate] = useState("");
  const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
  const [formData, setFormData] = useState({
@@ -240,7 +273,7 @@ export default function NewsSection() {
               )}
             <div
  onClick={() => toggleExpand(index)}
- className="bg-white rounded-[1.25rem] overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-slate-100 hover:-translate-y-1.5 hover:shadow-[0_12px_30px_rgba(0,0,0,0.08)] transition-all duration-300 ease-out flex flex-col cursor-pointer group"
+ className="bg-white rounded-[1.25rem] overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.03)] border-2 lg:border border-slate-100 hover:-translate-y-1.5 hover:shadow-[0_12px_30px_rgba(0,0,0,0.08)] transition-all duration-300 ease-out flex flex-col cursor-pointer group"
  >
  
  {news.image ? (
@@ -306,7 +339,7 @@ export default function NewsSection() {
  }}
  >
  
- {news.title}
+ <HighlightText text={news.title} query={searchQuery} />
  </h3>
  <div className="mb-4">
  
@@ -314,7 +347,7 @@ export default function NewsSection() {
  className={`text-[13px] text-slate-500 leading-[1.6] ${isExpanded ?"" :"line-clamp-2"}`}
  >
  
- {news.desc}
+ <HighlightText text={news.desc} query={searchQuery} />
  </p>
  <button
  onClick={(e) => {
@@ -335,7 +368,7 @@ export default function NewsSection() {
  )}
  </button>
  </div>
- <div className="mt-auto pt-4 border-t border-[var(--color-outline)] items-center justify-between">
+ <div className="mt-auto pt-4 border-t border-[var(--color-outline)] flex items-center justify-between">
  
  <button
     onClick={(e) => {
