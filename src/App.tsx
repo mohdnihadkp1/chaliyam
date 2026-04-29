@@ -86,6 +86,8 @@ function DynamicHelmet() {
   );
 }
 
+import SpotGallery from './components/SpotGallery';
+
 export default function App() {
   const [showBottomAd, setShowBottomAd] = useState(true);
   const location = useLocation();
@@ -108,12 +110,13 @@ export default function App() {
       <DynamicHelmet />
       <Header />
       
-      <main className="flex-1 pb-nav md:pb-0 relative z-0">
+      <main className="flex-1 pb-nav lg:pb-0 relative z-0">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/map" element={<MapSection />} />
           <Route path="/map/report" element={<ReportMap />} />
           <Route path="/spots" element={<SpotsSection />} />
+          <Route path="/spots/:id/gallery" element={<SpotGallery />} />
           <Route path="/bus" element={<BusSection />} />
           <Route path="/emergency" element={<EmergencySection />} />
           
@@ -140,7 +143,7 @@ export default function App() {
 
       {showBottomAd && (
         <div className="fixed bottom-[5.5rem] md:bottom-0 left-0 right-0 z-50 p-3 md:p-5 bg-transparent pointer-events-none flex justify-center pb-safe-bottom" style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 0.5rem)' }}>
-          <div className="bg-slate-900/95 backdrop-blur-xl text-white rounded-2xl shadow-2xl shadow-emerald-900/20 w-full max-w-sm pointer-events-auto border border-emerald-500/20 overflow-hidden relative group animate-slide-up hover:scale-[1.02] transition-transform duration-300">
+          <div className="bg-slate-900/95 backdrop-blur-xl text-white rounded-2xl shadow-2xl shadow-emerald-900/20 w-full max-w-sm pointer-events-auto border-2 lg:border border-emerald-500/20 overflow-hidden relative group animate-slide-up hover:scale-[1.02] transition-transform duration-300">
             {/* Progress bar for 5s timeout */}
             <div className="absolute bottom-0 left-0 h-1 bg-emerald-500 w-full origin-left animate-shrink" />
             

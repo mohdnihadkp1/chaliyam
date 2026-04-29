@@ -13,9 +13,43 @@ export default function AddMarketplace() {
     name: "",
     image: ""
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+    if (!formData.title.trim()) newErrors.title = "Title is required.";
+    else if (formData.title.trim().length < 3) newErrors.title = "Title must be at least 3 characters.";
+
+    if (!formData.price.trim()) newErrors.price = "Price is required.";
+    else if (isNaN(Number(formData.price))) newErrors.price = "Price must be a valid number.";
+
+    if (!formData.name.trim()) newErrors.name = "Your name is required.";
+
+    const phoneRegex = /^\+?[\d\s-]{10,}$/;
+    if (!formData.phone.trim()) newErrors.phone = "WhatsApp number is required.";
+    else if (!phoneRegex.test(formData.phone)) newErrors.phone = "Please enter a valid phone number.";
+
+    if (formData.image && !formData.image.match(/^https?:\/\/.+/)) {
+      newErrors.image = "Please enter a valid URL starting with http:// or https://";
+    }
+
+    if (!formData.desc.trim()) newErrors.desc = "Description is required.";
+    else if (formData.desc.trim().length < 10) newErrors.desc = "Description must be at least 10 characters.";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: "" }));
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validateForm()) return;
     const message = `*New Marketplace Listing*
 
 *Type:* ${formData.type}
@@ -40,7 +74,7 @@ export default function AddMarketplace() {
           <ArrowLeft size={18} /> Back to Marketplace
         </button>
 
-        <div className="bg-white rounded-[2rem] p-6 md:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100">
+        <div className="bg-white rounded-[2rem] p-6 md:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border-2 lg:border border-slate-100">
           <div className="flex items-center gap-4 mb-8">
             <div className="w-14 h-14 bg-[#25D366]/10 rounded-2xl flex items-center justify-center text-[#25D366] shadow-inner">
               <ShoppingBag size={28} />
@@ -53,16 +87,16 @@ export default function AddMarketplace() {
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2 relative">
                 <label className="text-sm font-bold text-slate-700 ml-1">Title</label>
                 <input 
-                  required
                   type="text"
                   value={formData.title}
-                  onChange={(e) => setFormData({...formData, title: e.target.value})}
-                  className="w-full px-4 py-3.5 rounded-2xl border-2 border-slate-100 bg-slate-50 text-slate-800 focus:outline-none focus:border-[#25D366] focus:bg-white placeholder:text-slate-400 font-medium transition-all shadow-inner"
+                  onChange={(e) => handleChange('title', e.target.value)}
+                  className={`w-full px-4 py-3.5 rounded-2xl border-2 ${errors.title ? 'border-red-500 focus:border-red-500' : 'border-slate-100 focus:border-[#25D366]'} bg-slate-50 text-slate-800 focus:outline-none focus:bg-white placeholder:text-slate-400 font-medium transition-all shadow-inner`}
                   placeholder="e.g. Used Bicycle"
                 />
+                {errors.title && <span className="text-red-500 text-xs ml-1 mt-1">{errors.title}</span>}
               </div>
               <div className="flex flex-col gap-2">
                 <label className="text-sm font-bold text-slate-700 ml-1">Type</label>
@@ -80,65 +114,66 @@ export default function AddMarketplace() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2 relative">
                 <label className="text-sm font-bold text-slate-700 ml-1">Price (₹)</label>
                 <input 
-                  required
                   type="text"
                   value={formData.price}
-                  onChange={(e) => setFormData({...formData, price: e.target.value})}
-                  className="w-full px-4 py-3.5 rounded-2xl border-2 border-slate-100 bg-slate-50 text-slate-800 focus:outline-none focus:border-[#25D366] focus:bg-white placeholder:text-slate-400 font-medium transition-all shadow-inner"
+                  onChange={(e) => handleChange('price', e.target.value)}
+                  className={`w-full px-4 py-3.5 rounded-2xl border-2 ${errors.price ? 'border-red-500 focus:border-red-500' : 'border-slate-100 focus:border-[#25D366]'} bg-slate-50 text-slate-800 focus:outline-none focus:bg-white placeholder:text-slate-400 font-medium transition-all shadow-inner`}
                   placeholder="e.g. 5000"
                 />
+                {errors.price && <span className="text-red-500 text-xs ml-1 mt-1">{errors.price}</span>}
               </div>
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2 relative">
                 <label className="text-sm font-bold text-slate-700 ml-1">Your Name</label>
                 <input 
-                  required
                   type="text"
                   value={formData.name}
-                  onChange={(e) => setFormData({...formData, name: e.target.value})}
-                  className="w-full px-4 py-3.5 rounded-2xl border-2 border-slate-100 bg-slate-50 text-slate-800 focus:outline-none focus:border-[#25D366] focus:bg-white placeholder:text-slate-400 font-medium transition-all shadow-inner"
+                  onChange={(e) => handleChange('name', e.target.value)}
+                  className={`w-full px-4 py-3.5 rounded-2xl border-2 ${errors.name ? 'border-red-500 focus:border-red-500' : 'border-slate-100 focus:border-[#25D366]'} bg-slate-50 text-slate-800 focus:outline-none focus:bg-white placeholder:text-slate-400 font-medium transition-all shadow-inner`}
                   placeholder="e.g. Nihad"
                 />
+                {errors.name && <span className="text-red-500 text-xs ml-1 mt-1">{errors.name}</span>}
               </div>
             </div>
 
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 relative">
               <label className="text-sm font-bold text-slate-700 ml-1">WhatsApp Number</label>
               <input 
-                required
                 type="tel"
                 value={formData.phone}
-                onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                className="w-full px-4 py-3.5 rounded-2xl border-2 border-slate-100 bg-slate-50 text-slate-800 focus:outline-none focus:border-[#25D366] focus:bg-white placeholder:text-slate-400 font-medium transition-all shadow-inner"
+                onChange={(e) => handleChange('phone', e.target.value)}
+                className={`w-full px-4 py-3.5 rounded-2xl border-2 ${errors.phone ? 'border-red-500 focus:border-red-500' : 'border-slate-100 focus:border-[#25D366]'} bg-slate-50 text-slate-800 focus:outline-none focus:bg-white placeholder:text-slate-400 font-medium transition-all shadow-inner`}
                 placeholder="+91 98765 43210"
               />
+              {errors.phone && <span className="text-red-500 text-xs ml-1 mt-1">{errors.phone}</span>}
             </div>
 
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 relative">
               <label className="text-sm font-bold text-slate-700 ml-1">Image URL</label>
               <div className="relative">
                 <input 
                   type="url"
                   value={formData.image}
-                  onChange={(e) => setFormData({...formData, image: e.target.value})}
-                  className="w-full pl-12 pr-4 py-3.5 rounded-2xl border-2 border-slate-100 bg-slate-50 text-slate-800 focus:outline-none focus:border-[#25D366] focus:bg-white placeholder:text-slate-400 font-medium transition-all shadow-inner"
+                  onChange={(e) => handleChange('image', e.target.value)}
+                  className={`w-full pl-12 pr-4 py-3.5 rounded-2xl border-2 ${errors.image ? 'border-red-500 focus:border-red-500' : 'border-slate-100 focus:border-[#25D366]'} bg-slate-50 text-slate-800 focus:outline-none focus:bg-white placeholder:text-slate-400 font-medium transition-all shadow-inner`}
                   placeholder="https://images.unsplash.com/..."
                 />
-                <UploadCloud className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+                <UploadCloud className={`absolute left-4 top-1/2 -translate-y-1/2 ${errors.image ? 'text-red-400' : 'text-slate-400'}`} size={20} />
               </div>
+              {errors.image && <span className="text-red-500 text-xs ml-1">{errors.image}</span>}
             </div>
 
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 relative">
               <label className="text-sm font-bold text-slate-700 ml-1">Description</label>
               <textarea 
-                required
                 value={formData.desc}
-                onChange={(e) => setFormData({...formData, desc: e.target.value})}
-                className="w-full px-4 py-3.5 rounded-2xl border-2 border-slate-100 bg-slate-50 text-slate-800 focus:outline-none focus:border-[#25D366] focus:bg-white placeholder:text-slate-400 font-medium transition-all shadow-inner min-h-[120px] resize-none"
+                onChange={(e) => handleChange('desc', e.target.value)}
+                className={`w-full px-4 py-3.5 rounded-2xl border-2 ${errors.desc ? 'border-red-500 focus:border-red-500' : 'border-slate-100 focus:border-[#25D366]'} bg-slate-50 text-slate-800 focus:outline-none focus:bg-white placeholder:text-slate-400 font-medium transition-all shadow-inner min-h-[120px] resize-none`}
                 placeholder="Provide details about the item..."
               />
+              {errors.desc && <span className="text-red-500 text-xs ml-1 mt-1">{errors.desc}</span>}
             </div>
 
             <button 

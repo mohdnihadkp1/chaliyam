@@ -19,6 +19,9 @@ import {
  Ship,
  Camera,
   Share2,
+  ChevronLeft,
+  ChevronRight,
+  Images
 } from 'lucide-react';
 export default function SpotsSection() {
   const navigate = useNavigate();
@@ -111,7 +114,7 @@ export default function SpotsSection() {
                 </div>
               )}
  <div onClick={() => setSelectedSpot(spot)}
- className="bg-white rounded-[1.25rem] overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.03)] border border-slate-100 hover:-translate-y-1.5 hover:shadow-[0_12px_30px_rgba(0,0,0,0.08)] transition-all duration-300 ease-out flex flex-col group cursor-pointer"
+ className="bg-white rounded-[1.25rem] overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.03)] border-2 lg:border border-slate-100 hover:-translate-y-1.5 hover:shadow-[0_12px_30px_rgba(0,0,0,0.08)] transition-all duration-300 ease-out flex flex-col group cursor-pointer"
  >
  
  <div className="h-[100px] md:h-[180px] relative overflow-hidden shrink-0 border-b border-[var(--color-outline)]">
@@ -151,7 +154,7 @@ export default function SpotsSection() {
  {selectedSpot && (
  <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
  
- <div className="bg-[var(--color-surface)] border border-[var(--color-outline)] w-full max-w-lg rounded-2xl md:rounded-[24px] overflow-hidden shadow-2xl animate-scale-up-center max-h-[90vh] flex flex-col">
+ <div className="bg-[var(--color-surface)] border-2 lg:border border-[var(--color-outline)] w-full max-w-lg rounded-2xl md:rounded-[24px] overflow-hidden shadow-2xl animate-scale-up-center max-h-[90vh] flex flex-col">
  
  <div className="relative h-48 md:h-64 border-b border-[var(--color-outline)] shrink-0">
  
@@ -192,13 +195,25 @@ export default function SpotsSection() {
  
  {selectedSpot.desc}
  </p>
- <button
-                 onClick={() => doShare({ title: selectedSpot.name, text: selectedSpot.desc, url: window.location.href, imageUrl: selectedSpot.image })}
-                 className="flex-1 flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 py-3 rounded-full font-medium transition-colors"
-               >
-                 <Share2 size={18} /> Share Spot
-               </button>
-               <button onClick={() => openGoogleMaps(selectedSpot.lat, selectedSpot.lng)}
+ <div className="flex gap-3 mb-4">
+   {selectedSpot.gallery && selectedSpot.gallery.length > 0 && (
+     <button
+       onClick={() => {
+         navigate(`/spots/${selectedSpot.id}/gallery`);
+       }}
+       className="flex-1 flex items-center justify-center gap-2 bg-[var(--color-primary)] hover:bg-indigo-700 text-white shadow-md shadow-indigo-200 py-3 rounded-[14px] font-bold transition-all active:scale-95"
+     >
+       <Images size={18} /> View Photos
+     </button>
+   )}
+   <button
+     onClick={() => doShare({ title: selectedSpot.name, text: selectedSpot.desc, url: window.location.href, imageUrl: selectedSpot.image })}
+     className="flex-1 flex items-center justify-center gap-2 bg-slate-100 hover:bg-slate-200 text-slate-700 py-3 rounded-[14px] font-bold transition-all active:scale-95"
+   >
+     <Share2 size={18} /> Share Spot
+   </button>
+ </div>
+                <button onClick={() => openGoogleMaps(selectedSpot.lat, selectedSpot.lng)}
  className="w-full flex items-center justify-center gap-2 bg-blue-600/90 hover:bg-blue-600 border border-blue-500/50 text-white py-3.5 rounded-xl transition-colors font-medium text-base shadow-[0_0_15px_rgba(37,99,235,0.2"
  >
  
@@ -218,5 +233,6 @@ export default function SpotsSection() {
 </div>
 </div>
  )}
+
  </div></>);
 }

@@ -11,9 +11,34 @@ export default function AddNews() {
     desc: "",
     name: ""
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+    if (!formData.title.trim()) newErrors.title = "Headline is required.";
+    else if (formData.title.trim().length < 3) newErrors.title = "Headline must be at least 3 characters.";
+
+    if (!formData.date) newErrors.date = "Date is required.";
+
+    if (!formData.name.trim()) newErrors.name = "Your name is required.";
+
+    if (!formData.desc.trim()) newErrors.desc = "Details are required.";
+    else if (formData.desc.trim().length < 10) newErrors.desc = "Details must be at least 10 characters.";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: "" }));
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validateForm()) return;
     const message = `*New News/Event Submission*
 
 *Type:* ${formData.type}
@@ -36,7 +61,7 @@ export default function AddNews() {
           <ArrowLeft size={18} /> Back to Events
         </button>
 
-        <div className="bg-white rounded-[2rem] p-6 md:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100">
+        <div className="bg-white rounded-[2rem] p-6 md:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border-2 lg:border border-slate-100">
           <div className="flex items-center gap-4 mb-8">
             <div className="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600 shadow-inner">
               <Newspaper size={28} />
@@ -64,51 +89,51 @@ export default function AddNews() {
                   <option value="Govt">Government</option>
                 </select>
               </div>
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2 relative">
                 <label className="text-sm font-bold text-slate-700 ml-1">Date</label>
                 <input 
-                  required
                   type="date"
                   value={formData.date}
-                  onChange={(e) => setFormData({...formData, date: e.target.value})}
-                  className="w-full px-4 py-3.5 rounded-2xl border-2 border-slate-100 bg-slate-50 text-slate-800 focus:outline-none focus:border-blue-500 focus:bg-white placeholder:text-slate-400 font-medium transition-all shadow-inner"
+                  onChange={(e) => handleChange('date', e.target.value)}
+                  className={`w-full px-4 py-3.5 rounded-2xl border-2 ${errors.date ? 'border-red-500 focus:border-red-500' : 'border-slate-100 focus:border-blue-500'} bg-slate-50 text-slate-800 focus:outline-none focus:bg-white placeholder:text-slate-400 font-medium transition-all shadow-inner`}
                 />
+                {errors.date && <span className="text-red-500 text-xs ml-1 mt-1">{errors.date}</span>}
               </div>
             </div>
 
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 relative">
               <label className="text-sm font-bold text-slate-700 ml-1">Headline</label>
               <input 
-                required
                 type="text"
                 value={formData.title}
-                onChange={(e) => setFormData({...formData, title: e.target.value})}
-                className="w-full px-4 py-3.5 rounded-2xl border-2 border-slate-100 bg-slate-50 text-slate-800 focus:outline-none focus:border-blue-500 focus:bg-white placeholder:text-slate-400 font-medium transition-all shadow-inner"
+                onChange={(e) => handleChange('title', e.target.value)}
+                className={`w-full px-4 py-3.5 rounded-2xl border-2 ${errors.title ? 'border-red-500 focus:border-red-500' : 'border-slate-100 focus:border-blue-500'} bg-slate-50 text-slate-800 focus:outline-none focus:bg-white placeholder:text-slate-400 font-medium transition-all shadow-inner`}
                 placeholder="What's happening?"
               />
+              {errors.title && <span className="text-red-500 text-xs ml-1 mt-1">{errors.title}</span>}
             </div>
 
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 relative">
               <label className="text-sm font-bold text-slate-700 ml-1">Your Name</label>
               <input 
-                required
                 type="text"
                 value={formData.name}
-                onChange={(e) => setFormData({...formData, name: e.target.value})}
-                className="w-full px-4 py-3.5 rounded-2xl border-2 border-slate-100 bg-slate-50 text-slate-800 focus:outline-none focus:border-blue-500 focus:bg-white placeholder:text-slate-400 font-medium transition-all shadow-inner"
+                onChange={(e) => handleChange('name', e.target.value)}
+                className={`w-full px-4 py-3.5 rounded-2xl border-2 ${errors.name ? 'border-red-500 focus:border-red-500' : 'border-slate-100 focus:border-blue-500'} bg-slate-50 text-slate-800 focus:outline-none focus:bg-white placeholder:text-slate-400 font-medium transition-all shadow-inner`}
                 placeholder="For verification purposes"
               />
+              {errors.name && <span className="text-red-500 text-xs ml-1 mt-1">{errors.name}</span>}
             </div>
 
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 relative">
               <label className="text-sm font-bold text-slate-700 ml-1">Details</label>
               <textarea 
-                required
                 value={formData.desc}
-                onChange={(e) => setFormData({...formData, desc: e.target.value})}
-                className="w-full px-4 py-3.5 rounded-2xl border-2 border-slate-100 bg-slate-50 text-slate-800 focus:outline-none focus:border-blue-500 focus:bg-white placeholder:text-slate-400 font-medium transition-all shadow-inner min-h-[120px] resize-none"
+                onChange={(e) => handleChange('desc', e.target.value)}
+                className={`w-full px-4 py-3.5 rounded-2xl border-2 ${errors.desc ? 'border-red-500 focus:border-red-500' : 'border-slate-100 focus:border-blue-500'} bg-slate-50 text-slate-800 focus:outline-none focus:bg-white placeholder:text-slate-400 font-medium transition-all shadow-inner min-h-[120px] resize-none`}
                 placeholder="Give all the details..."
               />
+              {errors.desc && <span className="text-red-500 text-xs ml-1 mt-1">{errors.desc}</span>}
             </div>
 
             <button 

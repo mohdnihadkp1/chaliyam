@@ -17,6 +17,8 @@ import {
  Users,
  Camera,
   Star,
+  Clock,
+  X
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 interface WeatherData {
@@ -263,7 +265,7 @@ export default function Home() {
   />{""}
   </form>{""}
    {showHistory && searchHistory.length > 0 && (
-     <div className="absolute top-full mt-2 left-0 right-0 bg-white rounded-2xl shadow-xl overflow-hidden z-[60] text-[var(--color-on-surface)] border border-[var(--color-outline)]">
+     <div className="absolute top-full mt-2 left-0 right-0 bg-white rounded-2xl shadow-xl overflow-hidden z-[60] text-[var(--color-on-surface)] border-2 lg:border border-[var(--color-outline)]">
        <div className="py-2">
          <div className="px-4 py-2 flex items-center justify-between">
            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Recent Searches</span>
@@ -322,7 +324,7 @@ export default function Home() {
       
       {/* Advanced Calicut Store Dedicated Slide (Long Slide) */}
       <div className="max-w-7xl mx-auto pt-4 md:pt-6 px-4 md:px-8 -mt-6 relative z-30 mb-6 md:mb-8 animate-fade-in-up">
-        <div className="group relative w-full flex flex-col md:flex-row bg-white rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border border-[var(--color-outline)] transition-all duration-500 hover:shadow-indigo-500/20">
+        <div className="group relative w-full flex flex-col md:flex-row bg-white rounded-2xl md:rounded-3xl overflow-hidden shadow-2xl border-2 lg:border border-[var(--color-outline)] transition-all duration-500 hover:shadow-indigo-500/20">
           
           {/* Image Section */}
           <div className="relative w-full md:w-1/2 h-36 md:h-auto md:min-h-[300px] overflow-hidden">
@@ -373,7 +375,7 @@ export default function Home() {
 
       {/* Promo Carousel (Top Slot) */}
       <div className="max-w-7xl mx-auto px-4 md:px-8 relative z-20 mb-6">
-        <div className="relative w-full h-40 md:h-56 rounded-2xl overflow-hidden shadow-lg border border-[var(--color-outline)] cursor-pointer active:scale-[0.98] transition-transform duration-300 group">
+        <div className="relative w-full h-40 md:h-56 rounded-2xl overflow-hidden shadow-lg border-2 lg:border border-[var(--color-outline)] cursor-pointer active:scale-[0.98] transition-transform duration-300 group">
           {randomizedPromoAds.map((ad, index) => (
             <div 
               key={ad.id} 
@@ -408,7 +410,7 @@ export default function Home() {
 
       {/* Home Delivery Guide Section */}
       <div className="max-w-7xl mx-auto px-4 md:px-8 mb-8">
-        <div className="bg-slate-50 border border-slate-200 rounded-3xl p-4 md:p-6 shadow-sm">
+        <div className="bg-slate-50 border-2 lg:border border-slate-200 rounded-3xl p-4 md:p-6 shadow-sm">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
             
             <div className="flex-1">
@@ -491,7 +493,7 @@ export default function Home() {
  {""}
  <div
  onClick={() => navigate("/emergency")}
- className="bg-red-50 border border-red-200 rounded-2xl md:rounded-3xl p-4 md:p-5 flex items-center justify-between cursor-pointer hover:shadow-md transition-all duration-300 group shadow-sm active:scale-95"
+ className="bg-red-50 border-2 lg:border border-red-200 rounded-2xl md:rounded-3xl p-4 md:p-5 flex items-center justify-between cursor-pointer hover:shadow-md transition-all duration-300 group shadow-sm active:scale-95"
  >
  {""}
  <div className="flex items-center gap-3 md:gap-4">

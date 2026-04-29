@@ -41,7 +41,7 @@ export default function Footer() {
  },
  ];
  return (
- <footer className="bg-[var(--color-surface)] text-[var(--color-on-surface-variant)] border-t border-[var(--color-outline)] mt-8 md:mt-16 pb-[80px] md:pb-0">
+ <footer className="hidden lg:block bg-[var(--color-surface)] text-[var(--color-on-surface-variant)] border-t border-[var(--color-outline)] mt-8 md:mt-16 pb-[80px] md:pb-0">
  {""}
  <div className="max-w-7xl mx-auto px-4 md:px-6 py-8 md:py-16">
  {""}
@@ -203,7 +203,7 @@ export default function Footer() {
             <h4 className="text-[var(--color-on-surface)] font-bold mb-3 md:mb-4 uppercase tracking-wider text-sm">
               Need Help?
             </h4>{""}
-            <div className="bg-[var(--color-surface-variant)] p-4 rounded-2xl border border-[var(--color-outline)]">
+            <div className="bg-[var(--color-surface-variant)] p-4 rounded-2xl border-2 lg:border border-[var(--color-outline)]">
               {""}
               <p className="text-sm mb-4 leading-relaxed">
                 {""}
@@ -257,7 +257,7 @@ export default function Footer() {
  >
  {""}
  <div
- className="bg-[var(--color-surface)] border border-[var(--color-outline)] rounded-[24px] p-6 max-w-md w-full text-left shadow-2xl relative animate-[fadeUp_0.2s_ease]"
+ className="bg-[var(--color-surface)] border-2 lg:border border-[var(--color-outline)] rounded-[24px] p-6 max-w-md w-full text-left shadow-2xl relative animate-[fadeUp_0.2s_ease]"
  onClick={(e) => e.stopPropagation()}
  >
  {""}
@@ -278,7 +278,7 @@ export default function Footer() {
  information, bus timings, emergency contacts, and a local
  marketplace, all in one accessible place.{""}
  </p>{""}
- <div className="bg-[var(--color-surface-variant)] p-4 rounded-xl border border-[var(--color-outline)]">
+ <div className="bg-[var(--color-surface-variant)] p-4 rounded-xl border-2 lg:border border-[var(--color-outline)]">
  {""}
  <p className="text-[14px] text-[var(--color-on-surface)] font-medium m-0">
  {""}
@@ -304,7 +304,7 @@ export default function Footer() {
  >
  {""}
  <div
- className="bg-[var(--color-surface)] border border-[var(--color-outline)] rounded-[24px] p-6 max-w-md w-full text-left shadow-2xl relative animate-[fadeUp_0.2s_ease]"
+ className="bg-[var(--color-surface)] border-2 lg:border border-[var(--color-outline)] rounded-[24px] p-6 max-w-md w-full text-left shadow-2xl relative animate-[fadeUp_0.2s_ease]"
  onClick={(e) => e.stopPropagation()}
  >
  {""}
@@ -396,7 +396,7 @@ export default function Footer() {
  >
  {""}
  <div
- className="bg-[var(--color-surface)] border border-[var(--color-outline)] rounded-[24px] p-6 max-w-md w-full text-left shadow-2xl relative animate-[fadeUp_0.2s_ease]"
+ className="bg-[var(--color-surface)] border-2 lg:border border-[var(--color-outline)] rounded-[24px] p-6 max-w-md w-full text-left shadow-2xl relative animate-[fadeUp_0.2s_ease]"
  onClick={(e) => e.stopPropagation()}
  >
  {""}
@@ -479,7 +479,7 @@ export default function Footer() {
  >
  {""}
  <div
- className="bg-[var(--color-surface)] border border-[var(--color-outline)] rounded-[24px] p-6 max-w-sm w-full text-left shadow-2xl relative animate-[fadeUp_0.2s_ease]"
+ className="bg-[var(--color-surface)] border-2 lg:border border-[var(--color-outline)] rounded-[24px] p-6 max-w-sm w-full text-left shadow-2xl relative animate-[fadeUp_0.2s_ease]"
  onClick={(e) => e.stopPropagation()}
  >
  {""}
@@ -503,7 +503,7 @@ export default function Footer() {
  href={page.url}
  target="_blank"
  rel="noopener noreferrer"
- className="flex items-center justify-between p-3.5 rounded-xl border border-[var(--color-outline)] hover:bg-[var(--color-surface-variant)] transition-all no-underline group"
+ className="flex items-center justify-between p-3.5 rounded-xl border-2 lg:border border-[var(--color-outline)] hover:bg-[var(--color-surface-variant)] transition-all no-underline group"
  >
  {""}
  <span className="font-medium text-[14px] text-[var(--color-on-surface)] group-hover:text-[var(--color-primary)] transition-colors">
